@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		D7CDFCEF2C085FAA00D91F87 /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7CDFCEE2C085FAA00D91F87 /* Contact.swift */; };
 		D7CDFCF12C0868FE00D91F87 /* NumericPad.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7CDFCF02C0868FE00D91F87 /* NumericPad.swift */; };
+		D7CDFCF32C08775E00D91F87 /* AmountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7CDFCF22C08775E00D91F87 /* AmountView.swift */; };
 		D7DAAD542C04D7290023285A /* MpesaAppCloneApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7DAAD532C04D7290023285A /* MpesaAppCloneApp.swift */; };
 		D7DAAD562C04D7290023285A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7DAAD552C04D7290023285A /* ContentView.swift */; };
 		D7DAAD582C04D72B0023285A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D7DAAD572C04D72B0023285A /* Assets.xcassets */; };
@@ -30,6 +31,7 @@
 /* Begin PBXFileReference section */
 		D7CDFCEE2C085FAA00D91F87 /* Contact.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Contact.swift; sourceTree = "<group>"; };
 		D7CDFCF02C0868FE00D91F87 /* NumericPad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumericPad.swift; sourceTree = "<group>"; };
+		D7CDFCF22C08775E00D91F87 /* AmountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmountView.swift; sourceTree = "<group>"; };
 		D7DAAD502C04D7290023285A /* MpesaAppClone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MpesaAppClone.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D7DAAD532C04D7290023285A /* MpesaAppCloneApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MpesaAppCloneApp.swift; sourceTree = "<group>"; };
 		D7DAAD552C04D7290023285A /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -199,6 +201,7 @@
 				D7DAAD772C05CEBE0023285A /* RoundedView.swift */,
 				D7DAAD792C0602F20023285A /* ServiceSheet.swift */,
 				D7CDFCF02C0868FE00D91F87 /* NumericPad.swift */,
+				D7CDFCF22C08775E00D91F87 /* AmountView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -315,6 +318,7 @@
 				D7CDFCEF2C085FAA00D91F87 /* Contact.swift in Sources */,
 				D7DAAD542C04D7290023285A /* MpesaAppCloneApp.swift in Sources */,
 				D7DAAD7A2C0602F20023285A /* ServiceSheet.swift in Sources */,
+				D7CDFCF32C08775E00D91F87 /* AmountView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

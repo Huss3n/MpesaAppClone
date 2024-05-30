@@ -16,65 +16,79 @@ struct SendRequest: View {
     @Environment(\.dismiss) var dismiss
     @State private var search: String = ""
     @Environment(\.colorScheme) var colorScheme
-    @State private var send: Bool = true
+    @State var send: Bool = true
+    @State private var enterPhoneNumber: Bool = false
     
     var body: some View {
-        
-        VStack(alignment: .leading, spacing: 20) {
-            topComponent
-            searchBar
-            ScrollView {
-                VStack(alignment: .leading, spacing: 18) {
-                    addToFav
-                    HStack {
-                        Circle()
-                            .fill(.blue)
-                            .frame(width: 40, height: 40)
-                            .overlay {
-                                Image(systemName: "keyboard.chevron.compact.down")
-                                    .foregroundStyle(.white)
-                            }
-                        
-                        Text("ENTER PHONE NUMBER")
-                            .font(.headline)
-                            .foregroundStyle(.blue)
-                    }
-                    circularButtons
-                    
-                    Text("FREQUENTS")
-                    // list the contacts below
-                    ForEach(contacts) { contactDetail in
+        NavigationStack {
+            VStack(alignment: .leading, spacing: 20) {
+                topComponent
+                searchBar
+                ScrollView {
+                    VStack(alignment: .leading, spacing: 20) {
+                        addToFav
                         HStack {
                             Circle()
-                                .fill(.gray.opacity(0.4))
+                                .fill(.blue)
                                 .frame(width: 40, height: 40)
                                 .overlay {
-                                    Text(contactDetail.initials)
-                                        .fontWeight(.light)
+                                    Image(systemName: "keyboard.chevron.compact.down")
+                                        .foregroundStyle(.white)
                                 }
                             
-                            VStack(alignment: .leading) {
-                                HStack {
-                                    Text(contactDetail.givenName)
-                                    Text(contactDetail.familyName)
+                            Text("ENTER PHONE NUMBER")
+                                .font(.headline)
+                                .foregroundStyle(.blue)
+                                .onTapGesture {
+                                    enterPhoneNumber.toggle()
                                 }
-                                Text(contactDetail.mobileNumber ?? "")
+                        }
+                        circularButtons
+                        
+                        Text("FREQUENTS")
+                        // list the contacts below
+                        ForEach(contacts) { contactDetail in
+                            NavigationLink {
+                                AmountView(contact: contactDetail)
+                                    .navigationBarBackButtonHidden()
+                            } label: {
+                                HStack {
+                                    Circle()
+                                        .fill(.gray.opacity(0.4))
+                                        .frame(width: 40, height: 40)
+                                        .overlay {
+                                            Text(contactDetail.initials)
+                                                .fontWeight(.light)
+                                        }
+                                    
+                                    VStack(alignment: .leading) {
+                                        HStack {
+                                            Text(contactDetail.givenName)
+                                            Text(contactDetail.familyName)
+                                        }
+                                        Text(contactDetail.mobileNumber ?? "")
+                                    }
+                                    .font(.subheadline)
+                                }
                             }
-                            .font(.subheadline)
+                            .tint(.primary)
                         }
                     }
+                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
                 }
-                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
+                .scrollIndicators(.hidden)
             }
-            .scrollIndicators(.hidden)
-        }
-        .onAppear {
-            Task.init {
-                await getContactList()
+            .onAppear {
+                Task.init {
+                    await getContactList()
+                }
+            }
+            .padding(.horizontal)
+            .padding(.top, 16)
+            .sheet(isPresented: $enterPhoneNumber) {
+                NumericPad(sendOrRequest: $send)
             }
         }
-        .padding(.horizontal)
-        .padding(.top, 16)
     }
     
     // MARK: Get contact details
@@ -183,6 +197,7 @@ extension SendRequest {
                     .offset(x: -23)
             }
         }
+        .padding(.top, 16)
     }
     
     private var searchBar: some View {
