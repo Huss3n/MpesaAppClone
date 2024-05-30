@@ -1,0 +1,527 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		D7CDFCEF2C085FAA00D91F87 /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7CDFCEE2C085FAA00D91F87 /* Contact.swift */; };
+		D7CDFCF12C0868FE00D91F87 /* NumericPad.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7CDFCF02C0868FE00D91F87 /* NumericPad.swift */; };
+		D7DAAD542C04D7290023285A /* MpesaAppCloneApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7DAAD532C04D7290023285A /* MpesaAppCloneApp.swift */; };
+		D7DAAD562C04D7290023285A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7DAAD552C04D7290023285A /* ContentView.swift */; };
+		D7DAAD582C04D72B0023285A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D7DAAD572C04D72B0023285A /* Assets.xcassets */; };
+		D7DAAD5B2C04D72B0023285A /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D7DAAD5A2C04D72B0023285A /* Preview Assets.xcassets */; };
+		D7DAAD6A2C04D79C0023285A /* Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7DAAD692C04D79C0023285A /* Home.swift */; };
+		D7DAAD6D2C04D7D40023285A /* MainTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7DAAD6C2C04D7D40023285A /* MainTab.swift */; };
+		D7DAAD712C04E05E0023285A /* PhotoPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7DAAD702C04E05E0023285A /* PhotoPicker.swift */; };
+		D7DAAD742C04E27E0023285A /* AccountBalance.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7DAAD732C04E27E0023285A /* AccountBalance.swift */; };
+		D7DAAD762C05CD0F0023285A /* ImageCourasel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7DAAD752C05CD0F0023285A /* ImageCourasel.swift */; };
+		D7DAAD782C05CEBE0023285A /* RoundedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7DAAD772C05CEBE0023285A /* RoundedView.swift */; };
+		D7DAAD7A2C0602F20023285A /* ServiceSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7DAAD792C0602F20023285A /* ServiceSheet.swift */; };
+		D7DAAD7D2C07179B0023285A /* TransactionButtonPressed.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7DAAD7C2C07179B0023285A /* TransactionButtonPressed.swift */; };
+		D7DAAD802C0717DE0023285A /* TransactionSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7DAAD7F2C0717DE0023285A /* TransactionSheet.swift */; };
+		D7DAAD822C071CCC0023285A /* TransactionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7DAAD812C071CCC0023285A /* TransactionType.swift */; };
+		D7DAAD842C0730960023285A /* Statements.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7DAAD832C0730960023285A /* Statements.swift */; };
+		D7DAAD862C0741250023285A /* SendRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7DAAD852C0741250023285A /* SendRequest.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		D7CDFCEE2C085FAA00D91F87 /* Contact.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Contact.swift; sourceTree = "<group>"; };
+		D7CDFCF02C0868FE00D91F87 /* NumericPad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumericPad.swift; sourceTree = "<group>"; };
+		D7DAAD502C04D7290023285A /* MpesaAppClone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MpesaAppClone.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D7DAAD532C04D7290023285A /* MpesaAppCloneApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MpesaAppCloneApp.swift; sourceTree = "<group>"; };
+		D7DAAD552C04D7290023285A /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		D7DAAD572C04D72B0023285A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		D7DAAD5A2C04D72B0023285A /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		D7DAAD692C04D79C0023285A /* Home.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Home.swift; sourceTree = "<group>"; };
+		D7DAAD6C2C04D7D40023285A /* MainTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTab.swift; sourceTree = "<group>"; };
+		D7DAAD702C04E05E0023285A /* PhotoPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPicker.swift; sourceTree = "<group>"; };
+		D7DAAD732C04E27E0023285A /* AccountBalance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountBalance.swift; sourceTree = "<group>"; };
+		D7DAAD752C05CD0F0023285A /* ImageCourasel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCourasel.swift; sourceTree = "<group>"; };
+		D7DAAD772C05CEBE0023285A /* RoundedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedView.swift; sourceTree = "<group>"; };
+		D7DAAD792C0602F20023285A /* ServiceSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceSheet.swift; sourceTree = "<group>"; };
+		D7DAAD7C2C07179B0023285A /* TransactionButtonPressed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionButtonPressed.swift; sourceTree = "<group>"; };
+		D7DAAD7F2C0717DE0023285A /* TransactionSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionSheet.swift; sourceTree = "<group>"; };
+		D7DAAD812C071CCC0023285A /* TransactionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionType.swift; sourceTree = "<group>"; };
+		D7DAAD832C0730960023285A /* Statements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Statements.swift; sourceTree = "<group>"; };
+		D7DAAD852C0741250023285A /* SendRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendRequest.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		D7DAAD4D2C04D7290023285A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		D7CDFCED2C085FA200D91F87 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				D7CDFCEE2C085FAA00D91F87 /* Contact.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		D7DAAD472C04D7290023285A = {
+			isa = PBXGroup;
+			children = (
+				D7DAAD522C04D7290023285A /* MpesaAppClone */,
+				D7DAAD512C04D7290023285A /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		D7DAAD512C04D7290023285A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D7DAAD502C04D7290023285A /* MpesaAppClone.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D7DAAD522C04D7290023285A /* MpesaAppClone */ = {
+			isa = PBXGroup;
+			children = (
+				D7DAAD722C04E2350023285A /* Storage */,
+				D7DAAD612C04D7360023285A /* App */,
+				D7DAAD652C04D7580023285A /* Auth */,
+				D7DAAD642C04D74B0023285A /* Components */,
+				D7DAAD662C04D75E0023285A /* Notification */,
+				D7DAAD622C04D73C0023285A /* Views */,
+				D7DAAD632C04D7420023285A /* ViewModel */,
+				D7DAAD552C04D7290023285A /* ContentView.swift */,
+				D7DAAD672C04D77C0023285A /* Model */,
+				D7DAAD572C04D72B0023285A /* Assets.xcassets */,
+				D7DAAD592C04D72B0023285A /* Preview Content */,
+			);
+			path = MpesaAppClone;
+			sourceTree = "<group>";
+		};
+		D7DAAD592C04D72B0023285A /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				D7DAAD5A2C04D72B0023285A /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		D7DAAD612C04D7360023285A /* App */ = {
+			isa = PBXGroup;
+			children = (
+				D7DAAD532C04D7290023285A /* MpesaAppCloneApp.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		D7DAAD622C04D73C0023285A /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				D7DAAD6B2C04D7CC0023285A /* Main */,
+				D7DAAD682C04D7940023285A /* Home */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		D7DAAD632C04D7420023285A /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		D7DAAD642C04D74B0023285A /* Components */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		D7DAAD652C04D7580023285A /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Auth;
+			sourceTree = "<group>";
+		};
+		D7DAAD662C04D75E0023285A /* Notification */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Notification;
+			sourceTree = "<group>";
+		};
+		D7DAAD672C04D77C0023285A /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		D7DAAD682C04D7940023285A /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				D7CDFCED2C085FA200D91F87 /* Model */,
+				D7DAAD7B2C07178C0023285A /* SubViews */,
+				D7DAAD6F2C04E04D0023285A /* Components */,
+				D7DAAD6E2C04E0480023285A /* Views */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		D7DAAD6B2C04D7CC0023285A /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				D7DAAD6C2C04D7D40023285A /* MainTab.swift */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
+		D7DAAD6E2C04E0480023285A /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				D7DAAD692C04D79C0023285A /* Home.swift */,
+				D7DAAD832C0730960023285A /* Statements.swift */,
+				D7DAAD852C0741250023285A /* SendRequest.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		D7DAAD6F2C04E04D0023285A /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				D7DAAD702C04E05E0023285A /* PhotoPicker.swift */,
+				D7DAAD752C05CD0F0023285A /* ImageCourasel.swift */,
+				D7DAAD772C05CEBE0023285A /* RoundedView.swift */,
+				D7DAAD792C0602F20023285A /* ServiceSheet.swift */,
+				D7CDFCF02C0868FE00D91F87 /* NumericPad.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		D7DAAD722C04E2350023285A /* Storage */ = {
+			isa = PBXGroup;
+			children = (
+				D7DAAD732C04E27E0023285A /* AccountBalance.swift */,
+			);
+			path = Storage;
+			sourceTree = "<group>";
+		};
+		D7DAAD7B2C07178C0023285A /* SubViews */ = {
+			isa = PBXGroup;
+			children = (
+				D7DAAD7C2C07179B0023285A /* TransactionButtonPressed.swift */,
+				D7DAAD7E2C0717CF0023285A /* Component */,
+			);
+			path = SubViews;
+			sourceTree = "<group>";
+		};
+		D7DAAD7E2C0717CF0023285A /* Component */ = {
+			isa = PBXGroup;
+			children = (
+				D7DAAD7F2C0717DE0023285A /* TransactionSheet.swift */,
+				D7DAAD812C071CCC0023285A /* TransactionType.swift */,
+			);
+			path = Component;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		D7DAAD4F2C04D7290023285A /* MpesaAppClone */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D7DAAD5E2C04D72B0023285A /* Build configuration list for PBXNativeTarget "MpesaAppClone" */;
+			buildPhases = (
+				D7DAAD4C2C04D7290023285A /* Sources */,
+				D7DAAD4D2C04D7290023285A /* Frameworks */,
+				D7DAAD4E2C04D7290023285A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MpesaAppClone;
+			productName = MpesaAppClone;
+			productReference = D7DAAD502C04D7290023285A /* MpesaAppClone.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		D7DAAD482C04D7290023285A /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1540;
+				LastUpgradeCheck = 1540;
+				TargetAttributes = {
+					D7DAAD4F2C04D7290023285A = {
+						CreatedOnToolsVersion = 15.4;
+					};
+				};
+			};
+			buildConfigurationList = D7DAAD4B2C04D7290023285A /* Build configuration list for PBXProject "MpesaAppClone" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = D7DAAD472C04D7290023285A;
+			productRefGroup = D7DAAD512C04D7290023285A /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				D7DAAD4F2C04D7290023285A /* MpesaAppClone */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		D7DAAD4E2C04D7290023285A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D7DAAD5B2C04D72B0023285A /* Preview Assets.xcassets in Resources */,
+				D7DAAD582C04D72B0023285A /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		D7DAAD4C2C04D7290023285A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D7DAAD782C05CEBE0023285A /* RoundedView.swift in Sources */,
+				D7DAAD6D2C04D7D40023285A /* MainTab.swift in Sources */,
+				D7DAAD562C04D7290023285A /* ContentView.swift in Sources */,
+				D7CDFCF12C0868FE00D91F87 /* NumericPad.swift in Sources */,
+				D7DAAD6A2C04D79C0023285A /* Home.swift in Sources */,
+				D7DAAD822C071CCC0023285A /* TransactionType.swift in Sources */,
+				D7DAAD712C04E05E0023285A /* PhotoPicker.swift in Sources */,
+				D7DAAD762C05CD0F0023285A /* ImageCourasel.swift in Sources */,
+				D7DAAD862C0741250023285A /* SendRequest.swift in Sources */,
+				D7DAAD7D2C07179B0023285A /* TransactionButtonPressed.swift in Sources */,
+				D7DAAD802C0717DE0023285A /* TransactionSheet.swift in Sources */,
+				D7DAAD742C04E27E0023285A /* AccountBalance.swift in Sources */,
+				D7DAAD842C0730960023285A /* Statements.swift in Sources */,
+				D7CDFCEF2C085FAA00D91F87 /* Contact.swift in Sources */,
+				D7DAAD542C04D7290023285A /* MpesaAppCloneApp.swift in Sources */,
+				D7DAAD7A2C0602F20023285A /* ServiceSheet.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		D7DAAD5C2C04D72B0023285A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		D7DAAD5D2C04D72B0023285A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		D7DAAD5F2C04D72B0023285A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"MpesaAppClone/Preview Content\"";
+				DEVELOPMENT_TEAM = 648U26QNYT;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSContactsUsageDescription = "Allow contact access to see the users";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.MpesaAppClone;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		D7DAAD602C04D72B0023285A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"MpesaAppClone/Preview Content\"";
+				DEVELOPMENT_TEAM = 648U26QNYT;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSContactsUsageDescription = "Allow contact access to see the users";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.MpesaAppClone;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		D7DAAD4B2C04D7290023285A /* Build configuration list for PBXProject "MpesaAppClone" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D7DAAD5C2C04D72B0023285A /* Debug */,
+				D7DAAD5D2C04D72B0023285A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D7DAAD5E2C04D72B0023285A /* Build configuration list for PBXNativeTarget "MpesaAppClone" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D7DAAD5F2C04D72B0023285A /* Debug */,
+				D7DAAD602C04D72B0023285A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = D7DAAD482C04D7290023285A /* Project object */;
+}
