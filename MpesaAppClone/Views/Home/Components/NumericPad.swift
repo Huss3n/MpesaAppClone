@@ -10,7 +10,7 @@ import SwiftUI
 struct NumericPad: View {
     @Environment(\.dismiss) var dismiss
     @State private var phoneNumber: String = ""
-    @Binding var sendOrRequest: Bool
+    var sendOrRequest: SendOrRequest
     
     var body: some View {
         NavigationStack {
@@ -36,7 +36,7 @@ struct NumericPad: View {
                     }
                 }
                 
-                Text(sendOrRequest ? "Send money".uppercased() : "request money".uppercased())
+                Text(sendOrRequest == .send ? "Send money".uppercased() : "request money".uppercased())
                     .font(.largeTitle)
                     .fontWeight(.light)
                     .padding(.top, 10)
@@ -64,7 +64,7 @@ struct NumericPad: View {
                             .font(.title)
                             .fontWeight(.light)
                             .keyboardType(.numberPad)
-                            .foregroundColor(.black)
+                            .foregroundColor(.primary)
                             .padding(.vertical, 10)
                             .padding(.horizontal)
                             .multilineTextAlignment(.center)
@@ -87,7 +87,7 @@ struct NumericPad: View {
                 // MARK: Continue button
                 VStack(spacing: 35) {
                     NavigationLink {
-                        AmountView(phoneNumber: phoneNumber)
+                        AmountView(phoneNumber: phoneNumber, sendOrRequest: sendOrRequest)
                             .navigationBarBackButtonHidden()
                     } label: {
                             HStack {
@@ -145,7 +145,8 @@ struct NumericPad: View {
 
 
 
-#Preview {NumericPad(sendOrRequest: .constant(true))
+#Preview {
+    NumericPad(sendOrRequest: .request)
 }
 
 struct NumberButton: View {

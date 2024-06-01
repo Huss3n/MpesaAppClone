@@ -27,10 +27,15 @@ struct TransactionSheet: View {
     var imageName5: String
     var transaction5: String
     
-    var buttonPressed: () -> (Void)
+    var buttonPressed1: () -> Void
+    var buttonPressed2: () -> Void
+    var buttonPressed3: () -> Void
+    var buttonPressed4: () -> Void
+    var buttonPressed5: () -> Void
     
     
     @State private var sendReqeust: Bool = false
+    @State private var global: Bool = false
     
     var body: some View {
         VStack(alignment: .leading, spacing: 18) {
@@ -50,7 +55,7 @@ struct TransactionSheet: View {
                 background: background
             )
             .onTapGesture {
-                sendReqeust.toggle()
+                buttonPressed1()
             }
 
            // MARK: Transaction 2
@@ -61,7 +66,7 @@ struct TransactionSheet: View {
                 background: background
             )
             .onTapGesture {
-                sendReqeust.toggle()
+                buttonPressed2()
             }
 
             // MARK: Transaction 3
@@ -72,7 +77,7 @@ struct TransactionSheet: View {
                 background: background
             )
             .onTapGesture {
-
+                buttonPressed3()
             }
 
             // MARK: Transaction 4
@@ -83,7 +88,7 @@ struct TransactionSheet: View {
                 background: background
             )
             .onTapGesture {
-
+                buttonPressed4()
             }
 
             // MARK: Transaction 5
@@ -94,39 +99,34 @@ struct TransactionSheet: View {
                 background: background
             )
             .onTapGesture {
-
+                buttonPressed5()
             }
 
             Spacer()
         }
         .padding(.horizontal)
         .padding(.top, 30)
-        .sheet(isPresented: $sendReqeust) {
-            SendRequest()
-        }
     }
 }
 
-#Preview {
-    TransactionSheet(
-        transactionTitle: "send and request",
-        isImageSystem: true,
-        imageName1: "arrow.up.right",
-        transaction1: "send money", 
-        background: .green,
-        imageName2: "arrow.down.backward",
-        transaction2: "request money",
-        imageName3: "globe",
-        transaction3: "GLOBAL",
-        imageName4: "qrcode",
-        transaction4: "Scan qr",
-        imageName5: "",
-        transaction5: "",
-        buttonPressed: {
-            
-        }
-    )
-}
+//#Preview {
+//    TransactionSheet(
+//        transactionTitle: "send and request",
+//        isImageSystem: true,
+//        imageName1: "arrow.up.right",
+//        transaction1: "send money", 
+//        background: .green,
+//        imageName2: "arrow.down.backward",
+//        transaction2: "request money",
+//        imageName3: "globe",
+//        transaction3: "GLOBAL",
+//        imageName4: "qrcode",
+//        transaction4: "Scan qr",
+//        imageName5: "",
+//        transaction5: "",
+//        buttonPressed: { }
+//    )
+//}
 
 
 struct TransactionSheetObject: View {
@@ -159,3 +159,6 @@ struct TransactionSheetObject: View {
         }
     }
 }
+
+
+

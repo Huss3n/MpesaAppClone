@@ -13,10 +13,35 @@ struct AmountView: View {
     @Environment(\.dismiss) var dismiss
     @State private var amount: Double = 0
     @State private var amountString: String = ""
+    @State private var addWithdrawalFees: Bool = false
+    
+    
+    // compute withdrawal cost
+    var withdrawalCost: Double {
+        if amount > 50 && amount <= 100 {
+            return 11
+        } else if amount > 100 && amount <= 2500 {
+            return 29
+        } else if amount > 2500 && amount <= 3500 {
+            return 52
+        } else if amount > 3500 && amount <= 5000 {
+            return 69
+        } else if amount > 5000 && amount <= 7500 {
+            return 87
+        } else if amount > 7500 && amount <= 10_000 {
+            return 115
+        } else if amount > 10_000 && amount <= 15_000 {
+            return 167
+        } else if amount > 15_000 && amount <= 20_000 {
+            return 105
+        }
+        return 0.0
+    }
     
     // to receive
     var contact: Contact?
     var phoneNumber: String = ""
+    var sendOrRequest: SendOrRequest
     
     var body: some View {
         NavigationStack {
@@ -72,7 +97,7 @@ struct AmountView: View {
                 Spacer()
                 
                 // MARK: Enter amount
-                VStack {
+                VStack(spacing: 20) {
                     HStack(alignment: .center) {
                         Text("KSH.")
                             .fontWeight(.ultraLight)
@@ -90,16 +115,47 @@ struct AmountView: View {
                     }
                     .foregroundStyle(amount < mpesaBalance.mpesaBalance ? Color.primary : Color.orange)
                     .font(.caption)
+                    
+                    
+                    if amount >= 50 {
+                        HStack {
+                            RoundedRectangle(cornerRadius: 5)
+                                .fill(addWithdrawalFees ? .green : .clear)
+                                .stroke(addWithdrawalFees ? .green : .black, lineWidth: 1.0)
+                                .frame(width: 20, height: 20)
+                                .overlay {
+                                    Image(systemName: "checkmark")
+                                        .foregroundStyle(addWithdrawalFees ? .white : .clear)
+                                }
+                                .onTapGesture {
+                                    addWithdrawalFees.toggle()
+                                }
+                            
+                            Text("ADD WITHDRAWAL FEES ")
+                                .foregroundStyle(.green)
+                            +
+                            Text("KSH.(\(String(format: "%.2f", withdrawalCost)))")
+                        }
+                        .font(.subheadline)
+                        .padding(.top, 12)
+                    }
+                    
                 }
                 .padding(.horizontal, 20)
                 .frame(width: 350, height: 120)
-                
+ 
                 // MARK: Continue button
                 VStack(spacing: 35) {
-                    Button(action: {
-                        // Continue button action
-                        print("Continue pressed with amount: \(amount)")
-                    }) {
+                    NavigationLink {
+                        ConfirmView(
+                            sendOrRequest: sendOrRequest,
+                            phoneNumber: phoneNumber,
+                            amount: addWithdrawalFees ? amount + withdrawalCost : amount,
+                            contact: contact
+                        )
+                        .navigationBarBackButtonHidden()
+                        
+                    } label: {
                         HStack {
                             Text("Continue".uppercased())
                                 .font(.title3)
@@ -118,7 +174,7 @@ struct AmountView: View {
                                 .frame(height: 55)
                         )
                     }
-                    .disabled(amount == 0)
+
                     
                     // MARK: Numeric pad
                     VStack(spacing: 4) {
@@ -174,5 +230,5 @@ struct AmountButton: View {
 }
 
 #Preview {
-    AmountView(phoneNumber: "0712345678")
+    AmountView(phoneNumber: "0712345678", sendOrRequest: .request)
 }

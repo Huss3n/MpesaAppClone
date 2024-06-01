@@ -16,7 +16,7 @@ struct SendRequest: View {
     @Environment(\.dismiss) var dismiss
     @State private var search: String = ""
     @Environment(\.colorScheme) var colorScheme
-    @State var send: Bool = true
+    @Binding var path: SendOrRequest
     @State private var enterPhoneNumber: Bool = false
     
     var body: some View {
@@ -49,7 +49,7 @@ struct SendRequest: View {
                         // list the contacts below
                         ForEach(contacts) { contactDetail in
                             NavigationLink {
-                                AmountView(contact: contactDetail)
+                                AmountView(contact: contactDetail, sendOrRequest: path)
                                     .navigationBarBackButtonHidden()
                             } label: {
                                 HStack {
@@ -86,7 +86,7 @@ struct SendRequest: View {
             .padding(.horizontal)
             .padding(.top, 16)
             .sheet(isPresented: $enterPhoneNumber) {
-                NumericPad(sendOrRequest: $send)
+                NumericPad(sendOrRequest: path)
             }
         }
     }
@@ -133,7 +133,7 @@ struct SendRequest: View {
 
 
 #Preview {
-    SendRequest()
+    SendRequest(path: .constant(.send))
 }
 
 
@@ -154,7 +154,7 @@ extension SendRequest {
                     .overlay {
                         HStack {
                             RoundedRectangle(cornerRadius: 25.0)
-                                .fill(send ? Color.gray.opacity(0.8) : Color.gray.opacity(0))
+                                .fill(path == .send ? Color.gray.opacity(0.8) : Color.gray.opacity(0))
                                 .frame(height: 40)
                                 .frame(maxWidth: .infinity, alignment: .leading)
                                 .overlay {
@@ -163,12 +163,12 @@ extension SendRequest {
                                 }
                                 .onTapGesture {
                                     withAnimation(.bouncy) {
-                                        send.toggle()
+                                        path = .send
                                     }
                                 }
                             
                             RoundedRectangle(cornerRadius: 25.0)
-                                .fill(send ? Color.gray.opacity(0) : Color.gray.opacity(0.8))
+                                .fill(path == .send ? Color.gray.opacity(0) : Color.gray.opacity(0.8))
                                 .frame(height: 40)
                                 .frame(maxWidth: .infinity, alignment: .trailing)
                                 .overlay {
@@ -177,7 +177,7 @@ extension SendRequest {
                                 }
                                 .onTapGesture {
                                     withAnimation(.bouncy) {
-                                        send.toggle()
+                                        path = .request
                                     }
                                 }
                         }
@@ -232,7 +232,7 @@ extension SendRequest {
     
     private var circularButtons: some View {
         Group {
-            if send {
+            if path == .send {
                 HStack {
                     Circle()
                         .fill(.green)

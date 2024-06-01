@@ -20,7 +20,7 @@ struct Home: View {
     @State private var showStatements: Bool = false
     @State private var showNotifications: Bool = false
     @State private var showSpending: Bool = false
-    @State private var sendRequest: Bool = false
+    @State var mainAction: MainAction = .send(.sendMoney)
     
     // access camera
     
@@ -84,12 +84,13 @@ struct Home: View {
             .sheet(isPresented: $viewALL, content: {
                 ServiceSheet(title: "", selection: selection)
             })
-            .sheet(isPresented: $showTrnsactionType, content: {
-                TransactionButtonPressed(detentHeight: $detentHeight, transactionType: transactionType, callToAction: { pathToTake() })
-//                    .presentationDetents([.fraction(detentHeight)])
-            })
-            .sheet(isPresented: $sendRequest, content: {
-                SendRequest()
+            .sheet(isPresented: $showTrnsactionType,
+                   content: {
+                TransactionButtonPressed(
+                    detentHeight: $detentHeight,
+                    transactionType: transactionType,
+                    mainAction: mainAction
+                )
             })
             .navigationDestination(isPresented: $showStatements) {
                 Statements()
