@@ -11,6 +11,8 @@ struct Global: View {
     @Environment(\.dismiss) var dismiss
     @Environment(\.colorScheme) var colorScheme
     @State private var optOut: Bool = false
+    @State private var sendToMobile: Bool = false
+    @State private var sendToBank: Bool = false
     
     // grid columns
     var columns: [GridItem] = [
@@ -27,7 +29,7 @@ struct Global: View {
                     
                     Text("GLOBAL")
                         .font(.title)
-                        .fontWeight(.ultraLight)
+                        .fontWeight(.light)
                     
                     LazyVGrid(columns: columns) {
                         
@@ -37,6 +39,9 @@ struct Global: View {
                             icon: "iphone",
                             isSystemImage: true
                         )
+                        .onTapGesture {
+                            sendToMobile.toggle()
+                        }
                         
                         GlobalComponent (
                             title: "send to bank",
@@ -44,6 +49,9 @@ struct Global: View {
                             icon: "house.and.flag.fill",
                             isSystemImage: true
                         )
+                        .onTapGesture {
+                            sendToBank.toggle()
+                        }
                         
                         GlobalComponent (
                             title: "send to western union",
@@ -92,9 +100,17 @@ struct Global: View {
                 }
                 .padding(.horizontal)
                 .padding(.top, 20)
+                .sheet(isPresented: $sendToMobile, content: {
+                    SendToMobile()
+                })
+                .sheet(isPresented: $sendToBank, content: {
+                    SendToBank()
+                })
+
                 
                 if optOut {
                     optOutDialog
+                        .transition(.asymmetric(insertion: .move(edge: .bottom), removal: .move(edge: .bottom)))
                 }
             }
         }
@@ -172,7 +188,7 @@ extension Global {
     
     private var optOutDialog: some View {
         RoundedRectangle(cornerRadius: 20)
-            .fill(colorScheme == .light ? .gray.opacity(0.18) : .gray.opacity(0.15))
+            .fill(colorScheme == .light ? .black.opacity(0.1) : .gray.opacity(0.15))
             .shadow(radius: 4)
             .frame(height: 130)
             .overlay {

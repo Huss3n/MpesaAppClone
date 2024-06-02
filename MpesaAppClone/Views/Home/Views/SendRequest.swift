@@ -211,7 +211,7 @@ extension SendRequest {
         .padding(8)
         .background(
             RoundedRectangle(cornerRadius: 25.0)
-                .fill(.gray.opacity(0.5))
+                .fill(.gray.opacity(0.3))
         )
     }
     

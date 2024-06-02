@@ -14,6 +14,12 @@
 		D7CDFCF92C089CC400D91F87 /* ConfirmView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7CDFCF82C089CC400D91F87 /* ConfirmView.swift */; };
 		D7CDFCFB2C09B0EF00D91F87 /* Global.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7CDFCFA2C09B0EF00D91F87 /* Global.swift */; };
 		D7CDFCFF2C0A1A0E00D91F87 /* MainAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7CDFCFE2C0A1A0E00D91F87 /* MainAction.swift */; };
+		D7CDFD022C0B4BB000D91F87 /* SendToMobile.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7CDFD012C0B4BB000D91F87 /* SendToMobile.swift */; };
+		D7CDFD062C0B50C700D91F87 /* CountriesFetch.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7CDFD052C0B50C700D91F87 /* CountriesFetch.swift */; };
+		D7CDFD082C0B549700D91F87 /* CountryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7CDFD072C0B549700D91F87 /* CountryModel.swift */; };
+		D7CDFD0B2C0B54CF00D91F87 /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = D7CDFD0A2C0B54CF00D91F87 /* SDWebImageSwiftUI */; };
+		D7CDFD0D2C0B6C4900D91F87 /* ContactEntryCountry.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7CDFD0C2C0B6C4900D91F87 /* ContactEntryCountry.swift */; };
+		D7CDFD0F2C0B830D00D91F87 /* SendToBank.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7CDFD0E2C0B830D00D91F87 /* SendToBank.swift */; };
 		D7DAAD542C04D7290023285A /* MpesaAppCloneApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7DAAD532C04D7290023285A /* MpesaAppCloneApp.swift */; };
 		D7DAAD562C04D7290023285A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7DAAD552C04D7290023285A /* ContentView.swift */; };
 		D7DAAD582C04D72B0023285A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D7DAAD572C04D72B0023285A /* Assets.xcassets */; };
@@ -40,6 +46,11 @@
 		D7CDFCF82C089CC400D91F87 /* ConfirmView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmView.swift; sourceTree = "<group>"; };
 		D7CDFCFA2C09B0EF00D91F87 /* Global.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Global.swift; sourceTree = "<group>"; };
 		D7CDFCFE2C0A1A0E00D91F87 /* MainAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainAction.swift; sourceTree = "<group>"; };
+		D7CDFD012C0B4BB000D91F87 /* SendToMobile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendToMobile.swift; sourceTree = "<group>"; };
+		D7CDFD052C0B50C700D91F87 /* CountriesFetch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountriesFetch.swift; sourceTree = "<group>"; };
+		D7CDFD072C0B549700D91F87 /* CountryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryModel.swift; sourceTree = "<group>"; };
+		D7CDFD0C2C0B6C4900D91F87 /* ContactEntryCountry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactEntryCountry.swift; sourceTree = "<group>"; };
+		D7CDFD0E2C0B830D00D91F87 /* SendToBank.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendToBank.swift; sourceTree = "<group>"; };
 		D7DAAD502C04D7290023285A /* MpesaAppClone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MpesaAppClone.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D7DAAD532C04D7290023285A /* MpesaAppCloneApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MpesaAppCloneApp.swift; sourceTree = "<group>"; };
 		D7DAAD552C04D7290023285A /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -64,6 +75,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D7CDFD0B2C0B54CF00D91F87 /* SDWebImageSwiftUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -78,6 +90,32 @@
 				D7CDFCFE2C0A1A0E00D91F87 /* MainAction.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		D7CDFD032C0B505E00D91F87 /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				D7CDFD052C0B50C700D91F87 /* CountriesFetch.swift */,
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
+		D7CDFD042C0B506600D91F87 /* Global */ = {
+			isa = PBXGroup;
+			children = (
+				D7CDFCFA2C09B0EF00D91F87 /* Global.swift */,
+				D7CDFD012C0B4BB000D91F87 /* SendToMobile.swift */,
+				D7CDFD0C2C0B6C4900D91F87 /* ContactEntryCountry.swift */,
+				D7CDFD0E2C0B830D00D91F87 /* SendToBank.swift */,
+			);
+			path = Global;
+			sourceTree = "<group>";
+		};
+		D7CDFD102C0C872800D91F87 /* New Group */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "New Group";
 			sourceTree = "<group>";
 		};
 		D7DAAD472C04D7290023285A = {
@@ -99,6 +137,7 @@
 		D7DAAD522C04D7290023285A /* MpesaAppClone */ = {
 			isa = PBXGroup;
 			children = (
+				D7CDFD032C0B505E00D91F87 /* Service */,
 				D7DAAD722C04E2350023285A /* Storage */,
 				D7DAAD612C04D7360023285A /* App */,
 				D7DAAD652C04D7580023285A /* Auth */,
@@ -170,6 +209,7 @@
 		D7DAAD672C04D77C0023285A /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				D7CDFD072C0B549700D91F87 /* CountryModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -196,10 +236,11 @@
 		D7DAAD6E2C04E0480023285A /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				D7CDFD102C0C872800D91F87 /* New Group */,
+				D7CDFD042C0B506600D91F87 /* Global */,
 				D7DAAD692C04D79C0023285A /* Home.swift */,
 				D7DAAD832C0730960023285A /* Statements.swift */,
 				D7DAAD852C0741250023285A /* SendRequest.swift */,
-				D7CDFCFA2C09B0EF00D91F87 /* Global.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -260,6 +301,9 @@
 			dependencies = (
 			);
 			name = MpesaAppClone;
+			packageProductDependencies = (
+				D7CDFD0A2C0B54CF00D91F87 /* SDWebImageSwiftUI */,
+			);
 			productName = MpesaAppClone;
 			productReference = D7DAAD502C04D7290023285A /* MpesaAppClone.app */;
 			productType = "com.apple.product-type.application";
@@ -288,6 +332,9 @@
 				Base,
 			);
 			mainGroup = D7DAAD472C04D7290023285A;
+			packageReferences = (
+				D7CDFD092C0B54CF00D91F87 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */,
+			);
 			productRefGroup = D7DAAD512C04D7290023285A /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -314,7 +361,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D7CDFD022C0B4BB000D91F87 /* SendToMobile.swift in Sources */,
 				D7DAAD782C05CEBE0023285A /* RoundedView.swift in Sources */,
+				D7CDFD082C0B549700D91F87 /* CountryModel.swift in Sources */,
 				D7DAAD6D2C04D7D40023285A /* MainTab.swift in Sources */,
 				D7CDFCFF2C0A1A0E00D91F87 /* MainAction.swift in Sources */,
 				D7DAAD562C04D7290023285A /* ContentView.swift in Sources */,
@@ -323,12 +372,15 @@
 				D7DAAD822C071CCC0023285A /* TransactionType.swift in Sources */,
 				D7DAAD712C04E05E0023285A /* PhotoPicker.swift in Sources */,
 				D7DAAD762C05CD0F0023285A /* ImageCourasel.swift in Sources */,
+				D7CDFD0D2C0B6C4900D91F87 /* ContactEntryCountry.swift in Sources */,
 				D7CDFCFB2C09B0EF00D91F87 /* Global.swift in Sources */,
 				D7DAAD862C0741250023285A /* SendRequest.swift in Sources */,
 				D7DAAD7D2C07179B0023285A /* TransactionButtonPressed.swift in Sources */,
 				D7DAAD802C0717DE0023285A /* TransactionSheet.swift in Sources */,
+				D7CDFD0F2C0B830D00D91F87 /* SendToBank.swift in Sources */,
 				D7CDFCF72C08891E00D91F87 /* SendOrRequest.swift in Sources */,
 				D7CDFCF92C089CC400D91F87 /* ConfirmView.swift in Sources */,
+				D7CDFD062C0B50C700D91F87 /* CountriesFetch.swift in Sources */,
 				D7DAAD742C04E27E0023285A /* AccountBalance.swift in Sources */,
 				D7DAAD842C0730960023285A /* Statements.swift in Sources */,
 				D7CDFCEF2C085FAA00D91F87 /* Contact.swift in Sources */,
@@ -542,6 +594,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		D7CDFD092C0B54CF00D91F87 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SDWebImage/SDWebImageSwiftUI.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.0.4;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		D7CDFD0A2C0B54CF00D91F87 /* SDWebImageSwiftUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D7CDFD092C0B54CF00D91F87 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */;
+			productName = SDWebImageSwiftUI;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = D7DAAD482C04D7290023285A /* Project object */;
 }
