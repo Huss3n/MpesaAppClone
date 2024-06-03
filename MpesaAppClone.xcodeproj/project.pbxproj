@@ -20,6 +20,9 @@
 		D7CDFD0B2C0B54CF00D91F87 /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = D7CDFD0A2C0B54CF00D91F87 /* SDWebImageSwiftUI */; };
 		D7CDFD0D2C0B6C4900D91F87 /* ContactEntryCountry.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7CDFD0C2C0B6C4900D91F87 /* ContactEntryCountry.swift */; };
 		D7CDFD0F2C0B830D00D91F87 /* SendToBank.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7CDFD0E2C0B830D00D91F87 /* SendToBank.swift */; };
+		D7CDFD122C0C8A9200D91F87 /* BuyGoods.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7CDFD112C0C8A9200D91F87 /* BuyGoods.swift */; };
+		D7CDFD142C0CBDED00D91F87 /* BuyGoodsNumberPad.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7CDFD132C0CBDED00D91F87 /* BuyGoodsNumberPad.swift */; };
+		D7CDFD162C0CC1A300D91F87 /* PayBill.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7CDFD152C0CC1A300D91F87 /* PayBill.swift */; };
 		D7DAAD542C04D7290023285A /* MpesaAppCloneApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7DAAD532C04D7290023285A /* MpesaAppCloneApp.swift */; };
 		D7DAAD562C04D7290023285A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7DAAD552C04D7290023285A /* ContentView.swift */; };
 		D7DAAD582C04D72B0023285A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D7DAAD572C04D72B0023285A /* Assets.xcassets */; };
@@ -51,6 +54,9 @@
 		D7CDFD072C0B549700D91F87 /* CountryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryModel.swift; sourceTree = "<group>"; };
 		D7CDFD0C2C0B6C4900D91F87 /* ContactEntryCountry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactEntryCountry.swift; sourceTree = "<group>"; };
 		D7CDFD0E2C0B830D00D91F87 /* SendToBank.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendToBank.swift; sourceTree = "<group>"; };
+		D7CDFD112C0C8A9200D91F87 /* BuyGoods.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuyGoods.swift; sourceTree = "<group>"; };
+		D7CDFD132C0CBDED00D91F87 /* BuyGoodsNumberPad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuyGoodsNumberPad.swift; sourceTree = "<group>"; };
+		D7CDFD152C0CC1A300D91F87 /* PayBill.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayBill.swift; sourceTree = "<group>"; };
 		D7DAAD502C04D7290023285A /* MpesaAppClone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MpesaAppClone.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D7DAAD532C04D7290023285A /* MpesaAppCloneApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MpesaAppCloneApp.swift; sourceTree = "<group>"; };
 		D7DAAD552C04D7290023285A /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -109,13 +115,6 @@
 				D7CDFD0E2C0B830D00D91F87 /* SendToBank.swift */,
 			);
 			path = Global;
-			sourceTree = "<group>";
-		};
-		D7CDFD102C0C872800D91F87 /* New Group */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = "New Group";
 			sourceTree = "<group>";
 		};
 		D7DAAD472C04D7290023285A = {
@@ -236,11 +235,13 @@
 		D7DAAD6E2C04E0480023285A /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				D7CDFD102C0C872800D91F87 /* New Group */,
+				D7CDFD132C0CBDED00D91F87 /* BuyGoodsNumberPad.swift */,
 				D7CDFD042C0B506600D91F87 /* Global */,
 				D7DAAD692C04D79C0023285A /* Home.swift */,
 				D7DAAD832C0730960023285A /* Statements.swift */,
 				D7DAAD852C0741250023285A /* SendRequest.swift */,
+				D7CDFD112C0C8A9200D91F87 /* BuyGoods.swift */,
+				D7CDFD152C0CC1A300D91F87 /* PayBill.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -363,6 +364,7 @@
 			files = (
 				D7CDFD022C0B4BB000D91F87 /* SendToMobile.swift in Sources */,
 				D7DAAD782C05CEBE0023285A /* RoundedView.swift in Sources */,
+				D7CDFD162C0CC1A300D91F87 /* PayBill.swift in Sources */,
 				D7CDFD082C0B549700D91F87 /* CountryModel.swift in Sources */,
 				D7DAAD6D2C04D7D40023285A /* MainTab.swift in Sources */,
 				D7CDFCFF2C0A1A0E00D91F87 /* MainAction.swift in Sources */,
@@ -380,12 +382,14 @@
 				D7CDFD0F2C0B830D00D91F87 /* SendToBank.swift in Sources */,
 				D7CDFCF72C08891E00D91F87 /* SendOrRequest.swift in Sources */,
 				D7CDFCF92C089CC400D91F87 /* ConfirmView.swift in Sources */,
+				D7CDFD142C0CBDED00D91F87 /* BuyGoodsNumberPad.swift in Sources */,
 				D7CDFD062C0B50C700D91F87 /* CountriesFetch.swift in Sources */,
 				D7DAAD742C04E27E0023285A /* AccountBalance.swift in Sources */,
 				D7DAAD842C0730960023285A /* Statements.swift in Sources */,
 				D7CDFCEF2C085FAA00D91F87 /* Contact.swift in Sources */,
 				D7DAAD542C04D7290023285A /* MpesaAppCloneApp.swift in Sources */,
 				D7DAAD7A2C0602F20023285A /* ServiceSheet.swift in Sources */,
+				D7CDFD122C0C8A9200D91F87 /* BuyGoods.swift in Sources */,
 				D7CDFCF32C08775E00D91F87 /* AmountView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

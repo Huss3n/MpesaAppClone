@@ -88,7 +88,7 @@ struct Home: View {
                    content: {
                 TransactionButtonPressed(
                     detentHeight: $detentHeight,
-                    transactionType: transactionType,
+                    transactionType: $transactionType,
                     mainAction: mainAction
                 )
             })

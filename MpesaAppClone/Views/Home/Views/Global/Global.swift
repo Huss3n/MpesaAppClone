@@ -13,6 +13,7 @@ struct Global: View {
     @State private var optOut: Bool = false
     @State private var sendToMobile: Bool = false
     @State private var sendToBank: Bool = false
+    @State private var sendWesternUnion: Bool = false
     
     // grid columns
     var columns: [GridItem] = [
@@ -24,7 +25,7 @@ struct Global: View {
     var body: some View {
         NavigationStack {
             ZStack(alignment: .bottom) {
-                VStack(spacing: 30) {
+                VStack(spacing: 20) {
                     topButtons
                     
                     Text("GLOBAL")
@@ -59,27 +60,39 @@ struct Global: View {
                             icon: "western-union",
                             isSystemImage: false
                         )
+                        .onTapGesture {
+                            sendWesternUnion.toggle()
+                        }
                         
-                        GlobalComponent (
-                            title: "link paypal account",
-                            backgroundColor: .cyan.opacity(0.8),
-                            icon: "paypal",
-                            isSystemImage: false
-                        )
+                        Link(destination: URL(string: "https://www.paypal.com/ke/home")!, label: {
+                            GlobalComponent (
+                                title: "link paypal account",
+                                backgroundColor: .cyan.opacity(0.8),
+                                icon: "paypal",
+                                isSystemImage: false
+                            )
+                        })
+                        .tint(.primary)
                         
-                        GlobalComponent (
-                            title: "paypal withdraw",
-                            backgroundColor: .cyan.opacity(0.8),
-                            icon: "paypal",
-                            isSystemImage: false
-                        )
-                        
-                        GlobalComponent (
-                            title: "paypal top up",
-                            backgroundColor: .cyan.opacity(0.8),
-                            icon: "paypal",
-                            isSystemImage: false
-                        )
+                        Link(destination: URL(string: "https://www.paypal.com/ke/home")!, label: {
+                            GlobalComponent (
+                                title: "paypal withdraw",
+                                backgroundColor: .cyan.opacity(0.8),
+                                icon: "paypal",
+                                isSystemImage: false
+                            )
+                        })
+                        .tint(.primary)
+                       
+                        Link(destination: URL(string: "https://www.paypal.com/ke/home")!, label: {
+                            GlobalComponent (
+                                title: "paypal top up",
+                                backgroundColor: .cyan.opacity(0.8),
+                                icon: "paypal",
+                                isSystemImage: false
+                            )
+                        })
+                        .tint(.primary)
                         
                         GlobalComponent (
                             title: "cost estimator",
@@ -98,16 +111,18 @@ struct Global: View {
                     
                     Spacer()
                 }
-                .padding(.horizontal)
+                .padding(.horizontal, 10)
                 .padding(.top, 20)
                 .sheet(isPresented: $sendToMobile, content: {
                     SendToMobile()
                 })
                 .sheet(isPresented: $sendToBank, content: {
-                    SendToBank()
+                    SendToBank(bankOrWesternUnion: true)
+                })
+                .sheet(isPresented: $sendWesternUnion, content: {
+                    SendToBank(bankOrWesternUnion: false)
                 })
 
-                
                 if optOut {
                     optOutDialog
                         .transition(.asymmetric(insertion: .move(edge: .bottom), removal: .move(edge: .bottom)))

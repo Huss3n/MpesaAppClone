@@ -7,13 +7,15 @@
 import SwiftUI
 struct TransactionButtonPressed: View {
     @Binding var detentHeight: CGFloat
-    var transactionType: TransactionType
+    @Binding var transactionType: TransactionType
     var mainAction: MainAction
     @State var path: SendOrRequest = .send
     
     @State private var send: Bool = false
     @State private var request: Bool = false
     @State private var global: Bool = false
+    @State private var paybill: Bool = false
+    @State private var buygoods: Bool = false
     
     
     var body: some View {
@@ -40,6 +42,15 @@ struct TransactionButtonPressed: View {
                     buttonPressed5: {}
                 )
                 .presentationDetents([.fraction(detentHeight)])
+                .sheet(isPresented: $send) {
+                    SendRequest(path: $path)
+                }
+                .sheet(isPresented: $request) {
+                    SendRequest(path: $path)
+                }
+                .sheet(isPresented: $global) {
+                    Global()
+                }
                 
             } else if transactionType == .pay {
                 TransactionSheet(
@@ -63,6 +74,12 @@ struct TransactionButtonPressed: View {
                     buttonPressed5: { handleButtonPressed(action: .pay(.globalPay)) }
                 )
                 .presentationDetents([.fraction(detentHeight)])
+                .sheet(isPresented: $paybill, content: {
+                    PayBill()
+                })
+                .sheet(isPresented: $buygoods, content: {
+                    BuyGoods()
+                })
                 
             } else if transactionType == .withdraw {
                 TransactionSheet(
@@ -111,15 +128,6 @@ struct TransactionButtonPressed: View {
                 .presentationDetents([.fraction(detentHeight)])
             }
         }
-        .sheet(isPresented: $send) {
-            SendRequest(path: $path)
-        }
-        .sheet(isPresented: $request) {
-            SendRequest(path: $path)
-        }
-        .sheet(isPresented: $global) {
-            Global()
-        }
     }
     
     func handleButtonPressed(action: MainAction) {
@@ -143,9 +151,9 @@ struct TransactionButtonPressed: View {
         case .pay(let payAction):
             switch payAction {
             case .payBill:
-                print("Pay Bill button pressed")
+                paybill.toggle()
             case .buyGoods:
-                print("Buy Goods button pressed")
+                buygoods.toggle()
             case .pochi:
                 print("Pochi button pressed")
             case .globalPay:
@@ -177,7 +185,7 @@ struct TransactionButtonPressed: View {
 }
 
 #Preview {
-    TransactionButtonPressed(detentHeight: .constant(0.5), transactionType: .airtime, mainAction: .airtime(.buyBundles)
+    TransactionButtonPressed(detentHeight: .constant(0.5), transactionType: .constant(.airtime), mainAction: .airtime(.buyBundles)
     )
 }
 

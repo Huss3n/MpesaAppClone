@@ -14,6 +14,7 @@ struct SendToMobile: View {
     @StateObject private var countriesFetch = CountriesFetch.shared
     @State private var showManuallView: Bool = false
     @State private var selectedCountry: String = ""
+    @State private var search: String = ""
     
     var body: some View {
         ScrollView {
@@ -44,6 +45,19 @@ struct SendToMobile: View {
                     .font(.title)
                     .fontWeight(.light)
                     .frame(maxWidth: .infinity, alignment: .center)
+                
+                HStack {
+                    Image(systemName: "magnifyingglass")
+                        .foregroundStyle(.white)
+                    
+                    
+                    TextField("Search", text: $search)
+                }
+                .padding(8)
+                .background(
+                    RoundedRectangle(cornerRadius: 25.0)
+                        .fill(.gray.opacity(0.2))
+                )
                 
                 ForEach(countriesFetch.fetchedSend) { cou in
                         CountryComponent(
