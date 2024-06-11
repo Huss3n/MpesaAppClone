@@ -7,7 +7,32 @@
 
 import SwiftUI
 
+@MainActor
+class StatementsVM: ObservableObject {
+    static let instance = StatementsVM()
+    
+    @Published var transactions: [Transaction] = []
+    
+    init() {
+        Task {
+            do {
+                try await fetchTransactions()
+            } catch {
+                print("Error fetching transactions \(error.localizedDescription)")
+            }
+        }
+    }
+    
+    @MainActor
+    func fetchTransactions() async throws {
+        self.transactions = try await DatabaseService.instance.fetchTransactionHistory()
+    }
+    
+}
+
 struct Statements: View {
+    @StateObject private var vm = StatementsVM.instance
+    
     @Environment(\.dismiss) var dismiss
     @Environment(\.colorScheme) var colorScheme
     @State private var searchTransaction: String = ""
@@ -18,8 +43,37 @@ struct Statements: View {
         NavigationStack {
             ZStack(alignment: .bottomTrailing) {
                 ScrollView {
-                    VStack {
-                        
+                    VStack(alignment: .leading, spacing: 12) {
+                        ForEach(vm.transactions, id: \.date) { transaction in
+                            var formattedDate: String {
+                                let formatter = DateFormatter()
+                                formatter.dateFormat = "d MMM, h:mm a"
+                                return formatter.string(from: transaction.date)
+                            }
+                            
+                            HStack {
+                              Circle()
+                                    .fill(.gray.opacity(0.3))
+                                    .frame(width: 40, height: 40)
+                                    .overlay {
+                                        Text("\(transaction.contact?.familyName.prefix(1) ?? "")\(transaction.contact?.givenName.prefix(1) ?? "")")
+                                    }
+                                
+                                VStack(alignment: .leading) {
+                                    Text("\(transaction.contact?.familyName ?? "") \(transaction.contact?.givenName ?? "")")
+                                    Text(transaction.contact?.mobileNumber ?? transaction.phoneNumber ?? "")
+                                        .fontWeight(.light)
+                                }
+                                
+                                Spacer()
+                                VStack {
+                                    Text("-KSH. \(transaction.amount.formatted(.number.precision(.fractionLength(2)).grouping(.automatic)))")
+                                    Text(formattedDate)
+                                        .fontWeight(.light)
+                                }
+                            }
+                            .padding(.horizontal)
+                        }
                     }
                     .toolbar {
                         ToolbarItem(placement: .topBarLeading) {
@@ -46,6 +100,7 @@ struct Statements: View {
                             }
                         }
                     }
+                    .padding(.top, 12)
                 }
                 
                 VStack {

@@ -102,7 +102,6 @@ struct RoundedComponent: View {
             Text(title.uppercased())
                 .font(.subheadline)
                 .multilineTextAlignment(.center)
-//                .fixedSize(horizontal: false, vertical: true)
         }
         .font(.subheadline)
         .fontWeight(.light)

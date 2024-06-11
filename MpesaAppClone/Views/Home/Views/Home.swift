@@ -6,11 +6,12 @@
 //
 
 import SwiftUI
-import PhotosUI
 
 struct Home: View {
+    @StateObject private var navigationState = NavigationState()
     @Environment(\.colorScheme) var colorScheme
     @ObservedObject var mpesaBalance = MpesaBalance.instance
+    @ObservedObject var statementFetched = StatementsVM.instance
     @State private var showBalance: Bool = false
     @State private var viewALL: Bool = false
     @State private var selection: selection = .financial
@@ -21,7 +22,10 @@ struct Home: View {
     @State private var showNotifications: Bool = false
     @State private var showSpending: Bool = false
     @State var mainAction: MainAction = .send(.sendMoney)
+    @State private var showProfile: Bool = false
     
+
+    var user: UserModel
     // access camera
     
     var body: some View {
@@ -42,13 +46,13 @@ struct Home: View {
                     VStack(spacing: 24) {
                         // MARK: Finacial services
                         financialServices
-
-                       // MARK: Shop and gift
+                        
+                        // MARK: Shop and gift
                         shopAndGift
-                       
+                        
                         // MARK: Public sector
                         publicSector
-                     
+                        
                         // MARK: GET INSURANCE
                         getInsurance
                         
@@ -81,6 +85,15 @@ struct Home: View {
                 .scrollIndicators(.hidden)
             }
             .padding(.horizontal, 6)
+            .environmentObject(navigationState)
+            .onChange(of: navigationState.shouldNavigateToHome) { _ , newValue in
+                if newValue {
+                    // Logic to dismiss all sheets and navigate to root view
+                    if let window = UIApplication.shared.windows.first {
+                        window.rootViewController?.dismiss(animated: true)
+                    }
+                }
+            }
             .sheet(isPresented: $viewALL, content: {
                 ServiceSheet(title: "", selection: selection)
             })
@@ -91,17 +104,27 @@ struct Home: View {
                     transactionType: $transactionType,
                     mainAction: mainAction
                 )
+                .environmentObject(navigationState)
             })
             .navigationDestination(isPresented: $showStatements) {
                 Statements()
                     .navigationBarBackButtonHidden()
             }
+            .navigationDestination(isPresented: $showProfile) {
+                Profile(user: user)
+                    .navigationBarBackButtonHidden()
+            }
+            .onAppear {
+                Task.init {
+                    await DatabaseService.instance.callOnLaunch()
+                }
+            }
+            .refreshable {
+                await DatabaseService.instance.callOnLaunch()
+            }
         }
     }
-    
-    func pathToTake() {
-        
-    }
+
     
     func getDetentHeight(_ transaction: TransactionType) -> CGFloat {
         if transaction == .sendMoney {
@@ -117,7 +140,7 @@ struct Home: View {
 }
 
 #Preview {
-    Home()
+    Home(user: UserModel(firstName: "Hussein", lastName: "Aisak", phoneNumber: "12345678", mpesaBalance: 0))
 }
 
 
@@ -128,13 +151,13 @@ extension Home {
             PhotoPicker()
                 .frame(width: 60, height: 60)
                 .onTapGesture {
-                    // choose photo
+                    showProfile.toggle()
                 }
             
             VStack(alignment: .leading) {
                 Text("Good Morning")
                     .fontWeight(.light)
-                Text("Hussein 👋")
+                Text("\(mpesaBalance.firstName) 👋")
                     .fontWeight(.heavy)
             }
             .padding(.leading, -18)
@@ -170,7 +193,7 @@ extension Home {
                             .padding(.top, 6)
                         
                         VStack(alignment: .center) {
-                            Text("Ksh. \(String(format: "%.2f", mpesaBalance.mpesaBalance))")
+                            Text("KSH. \(mpesaBalance.mpesaBalance.formatted(.number.precision(.fractionLength(2)).grouping(.automatic)))")
                                 .font(.title)
                                 .fontWeight(.light)
                             Text("Available FULIZA: KSH 8000.00")
@@ -296,37 +319,50 @@ extension Home {
                     }
             }
             
-            HStack {
-                Circle()
-                    .fill(.green.opacity(0.2))
-                    .frame(width: 60, height: 60)
-                    .overlay {
-                        Text("HM")
-                            .foregroundStyle(.green)
-                            .font(.headline)
-                            .fontWeight(.bold)
+            if let latestTransaction = statementFetched.transactions.first {
+                var formattedDate: String {
+                    let formatter = DateFormatter()
+                    formatter.dateFormat = "d MMM, h:mm a"
+                    return formatter.string(from: latestTransaction.date)
+                }
+                
+                HStack {
+                    Circle()
+                        .fill(.green.opacity(0.2))
+                        .frame(width: 50, height: 50)
+                        .overlay {
+                            Text("\(latestTransaction.contact?.familyName.prefix(1) ?? "")\(latestTransaction.contact?.givenName.prefix(1) ?? "")")
+                                .foregroundStyle(.green)
+                                .font(.headline)
+                                .fontWeight(.bold)
+                        }
+                    
+                    
+                    VStack(alignment: .leading, spacing: 6) {
+                        Text("\(latestTransaction.contact?.familyName ?? "") \(latestTransaction.contact?.givenName ?? "")")
+                            .font(.subheadline)
+                            .fontWeight(.medium)
+                        Text(latestTransaction.contact?.mobileNumber ?? latestTransaction.phoneNumber ?? "")
+                            .foregroundStyle(.gray)
+                            .fontWeight(.light)
                     }
-                
-                VStack(alignment: .leading, spacing: 6) {
-                    Text("HUSSEIN MUKTAR")
-                        .font(.subheadline)
-                        .fontWeight(.medium)
-                    Text("254712345678")
-                        .foregroundStyle(.gray)
-                        .fontWeight(.light)
+                    
+                    Spacer()
+                    
+                    VStack(alignment: .trailing, spacing: 6) {
+                        Text("-KSH. \(latestTransaction.amount.formatted(.number.precision(.fractionLength(2)).grouping(.automatic)))")
+                        Text(formattedDate)
+                            .foregroundStyle(.gray)
+                            .fontWeight(.light)
+                    }
+                    
                 }
-                
-                Spacer()
-                
-                VStack(alignment: .trailing, spacing: 6) {
-                    Text("-KSH. 3000.00")
-                    Text("28 May, 10:20 AM")
-                        .foregroundStyle(.gray)
-                        .fontWeight(.light)
-                }
-                
+                .blur(radius: showBalance ? 6 : 0)
+            }  else {
+                Text("No transactions available")
+                    .foregroundStyle(.gray)
+                    .fontWeight(.light)
             }
-            .blur(radius: showBalance ? 6 : 0)
         }
     }
 }
@@ -353,14 +389,21 @@ extension Home {
                         isText: true
                     )
                     
-                    RoundedComponent(
-                        imageText: "M-Shwari",
-                        title: "M-SHWARI",
-                        textColor: .white,
-                        backgroundColor: .gray,
-                        imageName: "",
-                        isText: true
-                    )
+                    NavigationLink {
+                        MshwariView()
+                            .navigationBarBackButtonHidden()
+                    } label: {
+                        RoundedComponent(
+                            imageText: "M-Shwari",
+                            title: "M-SHWARI",
+                            textColor: .white,
+                            backgroundColor: .gray,
+                            imageName: "",
+                            isText: true
+                        )
+                    }
+                    .tint(.primary)
+                    
                     
                     RoundedComponent(
                         imageText: "KCB",
@@ -495,7 +538,7 @@ extension Home {
             height: 165,
             viewALL: $viewALL,
             selection: $selection) {
-              
+                
             }
             .overlay {
                 HStack(alignment: .top, spacing: 22) {
@@ -546,7 +589,7 @@ extension Home {
             height: 165,
             viewALL: $viewALL,
             selection: $selection) {
-              // pass selection type and view all click
+                // pass selection type and view all click
             }
             .overlay {
                 HStack(alignment: .top, spacing: 22) {
@@ -597,7 +640,7 @@ extension Home {
             height: 165,
             viewALL: $viewALL,
             selection: $selection) {
-              // pass selection type and view all click
+                // pass selection type and view all click
             }
             .overlay {
                 HStack(alignment: .top, spacing: 22) {
@@ -623,7 +666,7 @@ extension Home {
             height: 165,
             viewALL: $viewALL,
             selection: $selection) {
-              // pass selection type and view all click
+                // pass selection type and view all click
             }
             .overlay {
                 HStack(alignment: .top, spacing: 22) {
@@ -677,7 +720,7 @@ extension Home {
             height: 165,
             viewALL: $viewALL,
             selection: $selection) {
-              // pass selection type and view all click
+                // pass selection type and view all click
             }
             .overlay {
                 HStack(alignment: .top, spacing: 22) {
@@ -722,7 +765,7 @@ extension Home {
                 .padding(.top, 52)
                 .padding(12)
             }
-
+        
     }
     
     private var mySafaricom: some View {
@@ -787,7 +830,7 @@ extension Home {
             height: 165,
             viewALL: $viewALL,
             selection: $selection) {
-              // pass selection type and view all click
+                // pass selection type and view all click
             }
             .overlay {
                 HStack(alignment: .top, spacing: 22) {
@@ -821,7 +864,7 @@ extension Home {
             height: 165,
             viewALL: $viewALL,
             selection: $selection) {
-              // pass selection type and view all click
+                // pass selection type and view all click
             }
             .overlay {
                 HStack(alignment: .top, spacing: 22) {

@@ -12,12 +12,15 @@ import UIKit
 import Contacts
 
 struct SendRequest: View {
+    @EnvironmentObject var navigationState: NavigationState
     @State private var contacts: [Contact] = []
     @Environment(\.dismiss) var dismiss
     @State private var search: String = ""
     @Environment(\.colorScheme) var colorScheme
     @Binding var path: SendOrRequest
     @State private var enterPhoneNumber: Bool = false
+    @State private var filteredContacts: [Contact] = []
+
     
     var body: some View {
         NavigationStack {
@@ -47,7 +50,7 @@ struct SendRequest: View {
                         
                         Text("FREQUENTS")
                         // list the contacts below
-                        ForEach(contacts) { contactDetail in
+                        ForEach(filteredContacts) { contactDetail in
                             NavigationLink {
                                 AmountView(contact: contactDetail, sendOrRequest: path)
                                     .navigationBarBackButtonHidden()
@@ -87,48 +90,66 @@ struct SendRequest: View {
             .padding(.top, 16)
             .sheet(isPresented: $enterPhoneNumber) {
                 NumericPad(sendOrRequest: path)
+                    .environmentObject(navigationState)
             }
         }
     }
     
     // MARK: Get contact details
+    // MARK: Get contact details
     func getContactList() async {
-        // create the store
-        let CNStore = CNContactStore()
-        
-        // specify the keys you want to fetch
-        let keys = [CNContactGivenNameKey,CNContactFamilyNameKey, CNContactPhoneNumbersKey, CNContactThumbnailImageDataKey] as [CNKeyDescriptor]
-        
-        // create a fetch request
-        let request = CNContactFetchRequest(keysToFetch: keys)
-        
-        // call the method to fetch all contacts
-        do {
-            try CNStore.enumerateContacts(with: request) { contact, _ in
-                var mobileNumber: String? = nil
-                
-                for number in contact.phoneNumbers {
-                    if number.label == CNLabelPhoneNumberMobile {
-                        mobileNumber = number.value.stringValue
-                        break
+        DispatchQueue.global(qos: .userInitiated).async {
+            // create the store
+            let CNStore = CNContactStore()
+            
+            // specify the keys you want to fetch
+            let keys = [CNContactGivenNameKey, CNContactFamilyNameKey, CNContactPhoneNumbersKey, CNContactThumbnailImageDataKey] as [CNKeyDescriptor]
+            
+            // create a fetch request
+            let request = CNContactFetchRequest(keysToFetch: keys)
+            
+            // call the method to fetch all contacts
+            do {
+                try CNStore.enumerateContacts(with: request) { contact, _ in
+                    var mobileNumber: String? = nil
+                    
+                    for number in contact.phoneNumbers {
+                        if number.label == CNLabelPhoneNumberMobile {
+                            mobileNumber = number.value.stringValue
+                            break
+                        }
+                    }
+                    
+                    if let mobile = mobileNumber {
+                        let newContact = Contact(
+                            givenName: contact.givenName,
+                            familyName: contact.familyName,
+                            mobileNumber: mobile
+                        )
+                        DispatchQueue.main.async {
+                            contacts.append(newContact)
+                            filteredContacts = contacts
+                        }
                     }
                 }
-                
-                if let mobile = mobileNumber {
-                    let newContact = Contact(
-                        givenName: contact.givenName,
-                        familyName: contact.familyName,
-                        mobileNumber: mobile
-                    )
-                    DispatchQueue.main.async {
-                        contacts.append(newContact)
-                    }
-                }
+            } catch {
+                print("error fetching contacts: \(error.localizedDescription)")
             }
-        } catch {
-            print("error fetching contacts: \(error.localizedDescription)")
         }
     }
+    
+    private func searchContacts() {
+        if search.isEmpty {
+            filteredContacts = contacts
+        } else {
+            filteredContacts = contacts.filter {
+                $0.givenName.localizedCaseInsensitiveContains(search) ||
+                $0.familyName.localizedCaseInsensitiveContains(search) ||
+                ($0.mobileNumber?.localizedCaseInsensitiveContains(search) ?? false)
+            }
+        }
+    }
+
 }
 
 
@@ -207,6 +228,11 @@ extension SendRequest {
             
             
             TextField("Search Contacts", text: $search)
+                .onChange(of: search) { _ in
+                    Task.init {
+                        searchContacts()
+                    }
+                   }
         }
         .padding(8)
         .background(

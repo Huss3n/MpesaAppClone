@@ -6,6 +6,7 @@
 //
 import SwiftUI
 struct TransactionButtonPressed: View {
+    @EnvironmentObject var navigationState: NavigationState
     @Binding var detentHeight: CGFloat
     @Binding var transactionType: TransactionType
     var mainAction: MainAction
@@ -16,6 +17,9 @@ struct TransactionButtonPressed: View {
     @State private var global: Bool = false
     @State private var paybill: Bool = false
     @State private var buygoods: Bool = false
+    @State private var withdraw: Bool = false
+    @State private var atm: Bool = false
+    @State private var buyAirtime: Bool = false
     
     
     var body: some View {
@@ -41,6 +45,7 @@ struct TransactionButtonPressed: View {
                     buttonPressed4: { handleButtonPressed(action: .send(.scanQr)) },
                     buttonPressed5: {}
                 )
+                .environmentObject(navigationState)
                 .presentationDetents([.fraction(detentHeight)])
                 .sheet(isPresented: $send) {
                     SendRequest(path: $path)
@@ -73,6 +78,7 @@ struct TransactionButtonPressed: View {
                     buttonPressed4: { handleButtonPressed(action: .pay(.globalPay)) },
                     buttonPressed5: { handleButtonPressed(action: .pay(.globalPay)) }
                 )
+                .environmentObject(navigationState)
                 .presentationDetents([.fraction(detentHeight)])
                 .sheet(isPresented: $paybill, content: {
                     PayBill()
@@ -85,7 +91,7 @@ struct TransactionButtonPressed: View {
                 TransactionSheet(
                     transactionTitle: "withdraw",
                     isImageSystem: true,
-                    imageName1: "house",
+                    imageName1: "storefront.fill",
                     transaction1: "withdraw",
                     background: .pink,
                     imageName2: "banknote",
@@ -102,7 +108,14 @@ struct TransactionButtonPressed: View {
                     buttonPressed4: { handleButtonPressed(action: .withdraw(.withdrawAtATM)) },
                     buttonPressed5: {}
                 )
+                .environmentObject(navigationState)
                 .presentationDetents([.fraction(detentHeight)])
+                .sheet(isPresented: $withdraw) {
+                    WithdrawView()
+                }
+                .sheet(isPresented: $atm, content: {
+                    WithdrawView(agentView: false)
+                })
                 
             } else {
                 TransactionSheet(
@@ -125,7 +138,11 @@ struct TransactionButtonPressed: View {
                     buttonPressed4: { },
                     buttonPressed5: {}
                 )
+                .environmentObject(navigationState)
                 .presentationDetents([.fraction(detentHeight)])
+                .sheet(isPresented: $buyAirtime, content: {
+                    BuyAirtmieView()
+                })
             }
         }
     }
@@ -163,9 +180,9 @@ struct TransactionButtonPressed: View {
         case .withdraw(let withdrawAction):
             switch withdrawAction {
             case .withdraw:
-                print("Withdraw button pressed")
+                withdraw.toggle()
             case .withdrawAtATM:
-                print("Withdraw at ATM button pressed")
+                atm.toggle()
             case .scanQr:
                 print("scan qr code")
             }
@@ -173,7 +190,7 @@ struct TransactionButtonPressed: View {
         case .airtime(let airtimeAction):
             switch airtimeAction {
             case .buyForMyNumber:
-                print("Buy for My Number button pressed")
+                buyAirtime.toggle()
             case .buyForOtherNumber:
                 print("Buy for Other Number button pressed")
             case .buyBundles:

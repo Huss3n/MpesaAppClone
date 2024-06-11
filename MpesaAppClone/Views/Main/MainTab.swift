@@ -7,34 +7,58 @@
 
 import SwiftUI
 
+@MainActor
+class MainEntry: ObservableObject {
+    @Published var isUserAuthenticated: Bool = false
+    @Published var showPinView: Bool = false
+    
+    func authUser(reason: String) async {
+        isUserAuthenticated = await LocalAuth.shared.authenticateWithBiometrics(reason: reason)
+    }
+}
+
 struct MainTab: View {
+    @StateObject private var vm = MainEntry()
+    var user: UserModel
+    
     var body: some View {
-        TabView {
-            Home()
-                .tabItem {
-                    Label("Home", systemImage: "house.fill")
+        ZStack {
+            if vm.isUserAuthenticated { // <- face id auth
+                TabView {
+                    Home(user: user)
+                        .tabItem {
+                            Label("Home", systemImage: "house.fill")
+                        }
+                    
+                    TransactView()
+                        .tabItem {
+                            Label("Transact", systemImage: "arrow.left.arrow.right")
+                        }
+                    
+                    ServicesView()
+                        .tabItem {
+                            Label("Services", systemImage: "list.triangle")
+                        }
+                    
+                    Grow()
+                        .tabItem {
+                            Label("Grow", systemImage: "chart.bar.xaxis.ascending.badge.clock")
+                        }
                 }
-            
-            Text("Transact")
-                .tabItem {
-                    Label("Transact", systemImage: "arrow.left.arrow.right")
+                .tint(.green)
+                .fontWeight(.bold)
+                .onAppear {
+                    Task {
+//                        await DatabaseService.instance.callOnLaunch()
+                    }
                 }
-            
-            Text("Services")
-                .tabItem {
-                    Label("Services", systemImage: "list.triangle")
-                }
-            
-            Text("Grow")
-                .tabItem {
-                    Label("Grow", systemImage: "chart.bar.xaxis.ascending.badge.clock")
-                }
+            } else {
+                Login(authState: $vm.isUserAuthenticated)
+            }
         }
-        .tint(.green)
-        .fontWeight(.bold)
     }
 }
 
 #Preview {
-    MainTab()
+    MainTab(user: UserModel(firstName: "Hussein", lastName: "Aisak", phoneNumber: "12345678", mpesaBalance: 0))
 }

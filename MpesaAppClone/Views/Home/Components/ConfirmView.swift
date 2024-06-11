@@ -8,8 +8,10 @@
 import SwiftUI
 
 struct ConfirmView: View {
+    @EnvironmentObject var navigationState: NavigationState
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.dismiss) var dismiss
+    @State private var initiateAuth: Bool = false
     
     // what to receive
     var sendOrRequest: SendOrRequest = .send
@@ -227,19 +229,36 @@ struct ConfirmView: View {
             )
             .padding(.top, 40)
             .onTapGesture {
-                // call face id auth
+                initiateAuth.toggle()
                 
-                // if successfull call func to detuct mpesa balance
-                // update user default balance and firebase balance
-                // send notification with the transaction
             }
             
             Spacer()
         }
         .padding(.horizontal, 10)
+        .sheet(isPresented: $initiateAuth) {
+            PinFallback(
+                cancel: $initiateAuth,
+                name: contact?.givenName ?? "",
+                phoneNumber: contact?.mobileNumber ?? phoneNumber,
+                amount: amount,
+                transactionCost: transactionCost,
+                contact: contact,
+                transactionType: .sendMoney,
+                agentNumber: "",
+                storeNumber: ""
+            )
+            .environmentObject(navigationState)
+        }
     }
 }
 
 #Preview {
     ConfirmView()
+        .environmentObject(NavigationState())
 }
+
+
+/*
+ AuthSuccess(name: contact?.givenName ?? "", phoneNumber: contact?.mobileNumber ?? phoneNumber, tranactionCost: transactionCost, contact: contact, transactionType: .sendMoney)
+ */

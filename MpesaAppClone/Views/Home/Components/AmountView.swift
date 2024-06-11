@@ -9,6 +9,7 @@ import SwiftUI
 import SwiftUI
 
 struct AmountView: View {
+    @EnvironmentObject var navigationState: NavigationState
     @ObservedObject var mpesaBalance = MpesaBalance.instance
     @Environment(\.dismiss) var dismiss
     @State private var amount: Double = 0
@@ -107,6 +108,7 @@ struct AmountView: View {
                     }
                     .font(.title)
                     .fontWeight(.medium)
+                    
                     HStack {
                         Text("BALANCE: KSH. \(String(format: "%.2f", mpesaBalance.mpesaBalance))")
                             .fontWeight(.bold)
@@ -117,7 +119,7 @@ struct AmountView: View {
                     .font(.caption)
                     
                     
-                    if amount >= 50 {
+                    if amount > 50 {
                         HStack {
                             RoundedRectangle(cornerRadius: 5)
                                 .fill(addWithdrawalFees ? .green : .clear)
@@ -153,6 +155,7 @@ struct AmountView: View {
                             amount: addWithdrawalFees ? amount + withdrawalCost : amount,
                             contact: contact
                         )
+                        .environmentObject(navigationState)
                         .navigationBarBackButtonHidden()
                         
                     } label: {

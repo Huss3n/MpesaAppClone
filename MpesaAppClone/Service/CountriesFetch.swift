@@ -4,7 +4,7 @@
 //
 //  Created by Muktar Hussein on 01/06/2024.
 //
-// countries API KEY - qsjpF6Qg1NrZ75UJlRdUH0r8sFEtoPJfJ48ViyvI
+// countries API KEY
 
 
 import Foundation
@@ -56,7 +56,7 @@ final class CountriesFetch: ObservableObject {
                     case .failure(let error):
                         print(error.localizedDescription)
                     }
-                } receiveValue: { [weak self] countries in
+                } receiveValue: {  _ in
                     // append here
                 }
                 .store(in: &cancellables)

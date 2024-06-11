@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct NumericPad: View {
+    @EnvironmentObject var navigationState: NavigationState
     @Environment(\.dismiss) var dismiss
     @State private var phoneNumber: String = ""
     var sendOrRequest: SendOrRequest
@@ -88,6 +89,7 @@ struct NumericPad: View {
                 VStack(spacing: 35) {
                     NavigationLink {
                         AmountView(phoneNumber: phoneNumber, sendOrRequest: sendOrRequest)
+                            .environmentObject(navigationState)
                             .navigationBarBackButtonHidden()
                     } label: {
                             HStack {
