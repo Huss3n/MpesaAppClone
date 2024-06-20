@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct ReqPay: View {
+    @EnvironmentObject var navState: MshwariNavigationState
     @Environment(\.dismiss) var dismiss
     @ObservedObject var loanBalance = MpesaBalance.instance
     @State private var navigateToLoan: Bool = false
@@ -65,7 +66,7 @@ struct ReqPay: View {
                     } else {
                         Text("Loan Amount: KSH. \(String(format: "%.2f", loanBalance.loanBalance))")
                             .fontWeight(.bold)
-                            .foregroundStyle(loanBalance.mpesaBalance < loanAmount ? Color.primary : Color.orange)
+                            .foregroundStyle(HomeVM.shared.mpesaBalance  < loanAmount ? Color.primary : Color.orange)
                             .font(.caption)
                     }
                     HStack {
@@ -126,10 +127,12 @@ struct ReqPay: View {
             .padding(.horizontal)
             .navigationDestination(isPresented: $navigateToLoan) {
                 ConfirmReqPay(reqPayPath: .loan, loanAmount: loanAmount,  isMpesa: true)
+                    .environmentObject(navState)
                     .navigationBarBackButtonHidden()
             }
             .navigationDestination(isPresented: $navigateToPay) {
                 FundsOriginPath(amount: loanAmount)
+                    .environmentObject(navState)
                     .navigationBarBackButtonHidden()
             }
         }

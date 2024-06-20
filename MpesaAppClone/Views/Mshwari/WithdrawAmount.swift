@@ -74,18 +74,18 @@ struct WithdrawAmount: View {
                         Text("KSH.")
                             .fontWeight(.ultraLight)
                         Text(amountString)
-                            .foregroundStyle(amount < mpesaBalance.mpesaBalance ? Color.primary : Color.orange)
+                            .foregroundStyle(amount < HomeVM.shared.mpesaBalance  ? Color.primary : Color.orange)
                         // show mpesa balance and the fuliza amount
                     }
                     .font(.title)
                     .fontWeight(.medium)
                     HStack {
-                        Text("BALANCE: KSH. \(String(format: "%.2f", mpesaBalance.mpesaBalance))")
+                        Text("BALANCE: KSH. \(String(format: "%.2f", HomeVM.shared.mpesaBalance ))")
                             .fontWeight(.bold)
                         Text("FULIZA: KSH. 500.00")
                             .fontWeight(.light)
                     }
-                    .foregroundStyle(amount < mpesaBalance.mpesaBalance ? Color.primary : Color.orange)
+                    .foregroundStyle(amount < HomeVM.shared.mpesaBalance  ? Color.primary : Color.orange)
                     .font(.caption)
                     
                         HStack {

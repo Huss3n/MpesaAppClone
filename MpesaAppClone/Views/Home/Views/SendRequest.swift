@@ -20,7 +20,6 @@ struct SendRequest: View {
     @Binding var path: SendOrRequest
     @State private var enterPhoneNumber: Bool = false
     @State private var filteredContacts: [Contact] = []
-
     
     var body: some View {
         NavigationStack {

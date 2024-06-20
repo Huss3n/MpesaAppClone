@@ -83,6 +83,7 @@
 		D7D31B6D2C183E35001A28B3 /* HomeVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7D31B6C2C183E35001A28B3 /* HomeVM.swift */; };
 		D7D31B6F2C185B34001A28B3 /* Transaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7D31B6E2C185B34001A28B3 /* Transaction.swift */; };
 		D7D31B712C18C23D001A28B3 /* DatabaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7D31B702C18C23C001A28B3 /* DatabaseService.swift */; };
+		D7D31B742C190121001A28B3 /* Root.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7D31B732C190120001A28B3 /* Root.swift */; };
 		D7DAAD542C04D7290023285A /* MpesaAppCloneApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7DAAD532C04D7290023285A /* MpesaAppCloneApp.swift */; };
 		D7DAAD562C04D7290023285A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7DAAD552C04D7290023285A /* ContentView.swift */; };
 		D7DAAD582C04D72B0023285A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D7DAAD572C04D72B0023285A /* Assets.xcassets */; };
@@ -99,6 +100,11 @@
 		D7DAAD822C071CCC0023285A /* TransactionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7DAAD812C071CCC0023285A /* TransactionType.swift */; };
 		D7DAAD842C0730960023285A /* Statements.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7DAAD832C0730960023285A /* Statements.swift */; };
 		D7DAAD862C0741250023285A /* SendRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7DAAD852C0741250023285A /* SendRequest.swift */; };
+		D7FAF6232C1A321500D0946C /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7FAF6222C1A321500D0946C /* NotificationManager.swift */; };
+		D7FAF6252C1B15D000D0946C /* Stats.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7FAF6242C1B15D000D0946C /* Stats.swift */; };
+		D7FAF6272C1B258400D0946C /* ColorTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7FAF6262C1B258400D0946C /* ColorTheme.swift */; };
+		D7FAF6292C1C3A0000D0946C /* IncomingRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7FAF6282C1C3A0000D0946C /* IncomingRequest.swift */; };
+		D7FAF62B2C1C9B5300D0946C /* MpesaLaunch.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D7FAF62A2C1C9B5300D0946C /* MpesaLaunch.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -164,11 +170,11 @@
 		D7D31B612C17259A001A28B3 /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
 		D7D31B632C1739B1001A28B3 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		D7D31B652C1749F7001A28B3 /* Register.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Register.swift; sourceTree = "<group>"; };
-		D7D31B672C182FF6001A28B3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		D7D31B682C1834F7001A28B3 /* OTPView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OTPView.swift; sourceTree = "<group>"; };
 		D7D31B6C2C183E35001A28B3 /* HomeVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeVM.swift; sourceTree = "<group>"; };
 		D7D31B6E2C185B34001A28B3 /* Transaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transaction.swift; sourceTree = "<group>"; };
 		D7D31B702C18C23C001A28B3 /* DatabaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseService.swift; sourceTree = "<group>"; };
+		D7D31B732C190120001A28B3 /* Root.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Root.swift; path = MpesaAppClone/App/Root.swift; sourceTree = SOURCE_ROOT; };
 		D7DAAD502C04D7290023285A /* MpesaAppClone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MpesaAppClone.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D7DAAD532C04D7290023285A /* MpesaAppCloneApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MpesaAppCloneApp.swift; sourceTree = "<group>"; };
 		D7DAAD552C04D7290023285A /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -186,6 +192,11 @@
 		D7DAAD812C071CCC0023285A /* TransactionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionType.swift; sourceTree = "<group>"; };
 		D7DAAD832C0730960023285A /* Statements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Statements.swift; sourceTree = "<group>"; };
 		D7DAAD852C0741250023285A /* SendRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendRequest.swift; sourceTree = "<group>"; };
+		D7FAF6222C1A321500D0946C /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
+		D7FAF6242C1B15D000D0946C /* Stats.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stats.swift; sourceTree = "<group>"; };
+		D7FAF6262C1B258400D0946C /* ColorTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorTheme.swift; sourceTree = "<group>"; };
+		D7FAF6282C1C3A0000D0946C /* IncomingRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomingRequest.swift; sourceTree = "<group>"; };
+		D7FAF62A2C1C9B5300D0946C /* MpesaLaunch.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MpesaLaunch.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -384,20 +395,15 @@
 			isa = PBXGroup;
 			children = (
 				D7D31B612C17259A001A28B3 /* Profile.swift */,
+				D7FAF6262C1B258400D0946C /* ColorTheme.swift */,
 			);
 			path = Profile;
-			sourceTree = "<group>";
-		};
-		D7D31B722C18FE9D001A28B3 /* New Group */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = "New Group";
 			sourceTree = "<group>";
 		};
 		D7DAAD472C04D7290023285A = {
 			isa = PBXGroup;
 			children = (
+				D7FAF62A2C1C9B5300D0946C /* MpesaLaunch.storyboard */,
 				D7DAAD522C04D7290023285A /* MpesaAppClone */,
 				D7DAAD512C04D7290023285A /* Products */,
 				D7D31B4D2C172284001A28B3 /* Frameworks */,
@@ -416,8 +422,6 @@
 			isa = PBXGroup;
 			children = (
 				D7DAAD612C04D7360023285A /* App */,
-				D7D31B672C182FF6001A28B3 /* Info.plist */,
-				D7D31B722C18FE9D001A28B3 /* New Group */,
 				D7DAAD652C04D7580023285A /* Auth */,
 				D7D31B402C16E2F9001A28B3 /* Extentions */,
 				D7D31B4A2C1721CE001A28B3 /* Firebase */,
@@ -448,6 +452,7 @@
 			isa = PBXGroup;
 			children = (
 				D7DAAD532C04D7290023285A /* MpesaAppCloneApp.swift */,
+				D7D31B732C190120001A28B3 /* Root.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -455,6 +460,7 @@
 		D7DAAD622C04D73C0023285A /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				D7FAF6282C1C3A0000D0946C /* IncomingRequest.swift */,
 				D7D31B602C172590001A28B3 /* Profile */,
 				D7B80E832C109249000B6326 /* GlobalPay */,
 				D7B80E6C2C0F2FC2000B6326 /* Mshwari */,
@@ -495,6 +501,7 @@
 		D7DAAD662C04D75E0023285A /* Notification */ = {
 			isa = PBXGroup;
 			children = (
+				D7FAF6222C1A321500D0946C /* NotificationManager.swift */,
 			);
 			path = Notification;
 			sourceTree = "<group>";
@@ -543,6 +550,7 @@
 				D7CDFD112C0C8A9200D91F87 /* BuyGoods.swift */,
 				D7CDFD152C0CC1A300D91F87 /* PayBill.swift */,
 				D7D31B452C16FC7D001A28B3 /* StoreNumber.swift */,
+				D7FAF6242C1B15D000D0946C /* Stats.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -663,6 +671,7 @@
 			files = (
 				D7DAAD5B2C04D72B0023285A /* Preview Assets.xcassets in Resources */,
 				D7D31B4C2C1721EC001A28B3 /* GoogleService-Info.plist in Resources */,
+				D7FAF62B2C1C9B5300D0946C /* MpesaLaunch.storyboard in Resources */,
 				D7DAAD582C04D72B0023285A /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -675,6 +684,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D7D31B492C17213A001A28B3 /* FirebaseAuth.swift in Sources */,
+				D7FAF6292C1C3A0000D0946C /* IncomingRequest.swift in Sources */,
 				D7B80E912C10AA97000B6326 /* CardBack.swift in Sources */,
 				D7CDFD022C0B4BB000D91F87 /* SendToMobile.swift in Sources */,
 				D7D31B6D2C183E35001A28B3 /* HomeVM.swift in Sources */,
@@ -683,6 +693,7 @@
 				D7B80E762C1056FC000B6326 /* ReqPay.swift in Sources */,
 				D7DAAD782C05CEBE0023285A /* RoundedView.swift in Sources */,
 				D7D31B442C16F4C9001A28B3 /* DismissSheetsKey.swift in Sources */,
+				D7D31B742C190121001A28B3 /* Root.swift in Sources */,
 				D7CDFD162C0CC1A300D91F87 /* PayBill.swift in Sources */,
 				D7CDFD082C0B549700D91F87 /* CountryModel.swift in Sources */,
 				D7D31B212C1473E0001A28B3 /* GlobalIndent.swift in Sources */,
@@ -694,6 +705,7 @@
 				D7D31B3B2C15F5D6001A28B3 /* TransactionCatgory.swift in Sources */,
 				D7D31B252C147EC7001A28B3 /* MonthlyBudget.swift in Sources */,
 				D7CDFD272C0E04CB00D91F87 /* Grow.swift in Sources */,
+				D7FAF6252C1B15D000D0946C /* Stats.swift in Sources */,
 				D7D31B372C15EFBB001A28B3 /* CheckMarkAnimation.swift in Sources */,
 				D7B80E7E2C107D88000B6326 /* ConfirmReqPay.swift in Sources */,
 				D7D31B3D2C1613C5001A28B3 /* PinFallback.swift in Sources */,
@@ -712,6 +724,7 @@
 				D7D31B692C1834F7001A28B3 /* OTPView.swift in Sources */,
 				D7D31B352C15E964001A28B3 /* AuthSuccess.swift in Sources */,
 				D7CDFD1A2C0DBA8700D91F87 /* GenericConfirm.swift in Sources */,
+				D7FAF6232C1A321500D0946C /* NotificationManager.swift in Sources */,
 				D7DAAD7D2C07179B0023285A /* TransactionButtonPressed.swift in Sources */,
 				D7D31B232C1476A6001A28B3 /* Budget.swift in Sources */,
 				D7B80E8C2C10A788000B6326 /* GlobalVM.swift in Sources */,
@@ -750,6 +763,7 @@
 				D7D31B622C17259A001A28B3 /* Profile.swift in Sources */,
 				D7CDFD122C0C8A9200D91F87 /* BuyGoods.swift in Sources */,
 				D7CDFD212C0DD8C800D91F87 /* TransactView.swift in Sources */,
+				D7FAF6272C1B258400D0946C /* ColorTheme.swift in Sources */,
 				D7D31B712C18C23D001A28B3 /* DatabaseService.swift in Sources */,
 				D7B80E8A2C1092AD000B6326 /* CardView.swift in Sources */,
 				D7CDFCF32C08775E00D91F87 /* AmountView.swift in Sources */,
@@ -895,6 +909,7 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = MpesaLaunch.storyboard;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
@@ -928,6 +943,7 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = MpesaLaunch.storyboard;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 17.5;

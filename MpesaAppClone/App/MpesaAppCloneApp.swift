@@ -10,15 +10,9 @@ import Firebase
 @main
 struct MpesaClone: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
-    let user = UserModel(firstName: "Hussein", lastName: "Aisak", phoneNumber: "12345678", mpesaBalance: 0)
-    @AppStorage("userLoggedIn") var userLoggedIn: Bool = false
-    
     var body: some Scene {
         WindowGroup {
-            Register()
-                .fullScreenCover(isPresented: $userLoggedIn, content: {
-                    MainTab(user: user)
-                })
+            Root()
         }
     }
 }

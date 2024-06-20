@@ -7,11 +7,18 @@
 
 import SwiftUI
 
+struct MoneyRequest: Codable {
+    var requestId: String
+    var fromUserId: String
+    var toUserId: String
+    var amount: Double
+    var status: String // "pending", "approved", "rejected"
+}
+
 struct Home: View {
     @StateObject private var navigationState = NavigationState()
     @Environment(\.colorScheme) var colorScheme
-    @ObservedObject var mpesaBalance = MpesaBalance.instance
-    @ObservedObject var statementFetched = StatementsVM.instance
+    @ObservedObject var homeVM = HomeVM.shared
     @State private var showBalance: Bool = false
     @State private var viewALL: Bool = false
     @State private var selection: selection = .financial
@@ -23,104 +30,139 @@ struct Home: View {
     @State private var showSpending: Bool = false
     @State var mainAction: MainAction = .send(.sendMoney)
     @State private var showProfile: Bool = false
+    @State private var showStats: Bool = false
     
-
+    @AppStorage("requestSent") var requestSent: Bool = false
+    
     var user: UserModel
     // access camera
     
     var body: some View {
         NavigationStack {
-            VStack {
-                topView
-                ScrollView {
-                    balanceView
-                        .padding(.bottom, 12)
-                    
-                    transactionButtons
-                        .padding(.bottom, 12)
-                    
-                    mpesaStatements
-                    ImageCarousel()
-                    
-                    // services
-                    VStack(spacing: 24) {
-                        // MARK: Finacial services
-                        financialServices
+            ZStack(alignment: .top) {
+                VStack {
+                    topView
+                    ScrollView {
+                        balanceView
+                            .padding(.bottom, 12)
                         
-                        // MARK: Shop and gift
-                        shopAndGift
+                        transactionButtons
+                            .padding(.bottom, 12)
                         
-                        // MARK: Public sector
-                        publicSector
+                        mpesaStatements
+                        ImageCarousel()
                         
-                        // MARK: GET INSURANCE
-                        getInsurance
-                        
-                        // MARK: Transport and Travel
-                        transportAndTravel
-                        
-                        // MARK: Reward and Royalty
-                        rewardAndLoyalty
-                        
-                        // MARK: Health and wellness
-                        healthAndWellness
-                        
-                        // MARK: Events and expiriences
-                        eventsAndExpiriences
-                        
-                        // MARK: My safaricom
-                        mySafaricom
-                        
-                        // MARK: Education
-                        education
-                        
-                        // MARK: News and entertainment
-                        newsAndEntertainment
-                        
-                        Rectangle()
-                            .fill(.clear)
-                            .frame(height: 20)
+                        // services
+                        VStack(spacing: 24) {
+                            // MARK: Finacial services
+                            financialServices
+                            
+                            // MARK: Shop and gift
+                            shopAndGift
+                            
+                            // MARK: Public sector
+                            publicSector
+                            
+                            // MARK: GET INSURANCE
+                            getInsurance
+                            
+                            // MARK: Transport and Travel
+                            transportAndTravel
+                            
+                            // MARK: Reward and Royalty
+                            rewardAndLoyalty
+                            
+                            // MARK: Health and wellness
+                            healthAndWellness
+                            
+                            // MARK: Events and expiriences
+                            eventsAndExpiriences
+                            
+                            // MARK: My safaricom
+                            mySafaricom
+                            
+                            // MARK: Education
+                            education
+                            
+                            // MARK: News and entertainment
+                            newsAndEntertainment
+                            
+                            Rectangle()
+                                .fill(.clear)
+                                .frame(height: 20)
+                        }
                     }
+                    .scrollIndicators(.hidden)
                 }
-                .scrollIndicators(.hidden)
-            }
-            .padding(.horizontal, 6)
-            .environmentObject(navigationState)
-            .onChange(of: navigationState.shouldNavigateToHome) { _ , newValue in
-                if newValue {
-                    // Logic to dismiss all sheets and navigate to root view
-                    if let window = UIApplication.shared.windows.first {
-                        window.rootViewController?.dismiss(animated: true)
-                    }
-                }
-            }
-            .sheet(isPresented: $viewALL, content: {
-                ServiceSheet(title: "", selection: selection)
-            })
-            .sheet(isPresented: $showTrnsactionType,
-                   content: {
-                TransactionButtonPressed(
-                    detentHeight: $detentHeight,
-                    transactionType: $transactionType,
-                    mainAction: mainAction
-                )
+                .padding(.horizontal, 6)
                 .environmentObject(navigationState)
-            })
-            .navigationDestination(isPresented: $showStatements) {
-                Statements()
-                    .navigationBarBackButtonHidden()
-            }
-            .navigationDestination(isPresented: $showProfile) {
-                Profile(user: user)
-                    .navigationBarBackButtonHidden()
-            }
-            .onAppear {
-                Task.init {
-                    await DatabaseService.instance.callOnLaunch()
+                .onChange(of: navigationState.shouldNavigateToHome) { _ , newValue in
+                    if newValue {
+                        // Logic to dismiss all sheets and navigate to root view
+                        if let window = UIApplication.shared.windows.first {
+                            window.rootViewController?.dismiss(animated: true)
+                        }
+                    }
                 }
-            }
-            .refreshable {
-                await DatabaseService.instance.callOnLaunch()
+                .sheet(isPresented: $viewALL, content: {
+                    ServiceSheet(title: "", selection: selection)
+                })
+                .sheet(isPresented: $showTrnsactionType,
+                       content: {
+                    TransactionButtonPressed(
+                        detentHeight: $detentHeight,
+                        transactionType: $transactionType,
+                        mainAction: mainAction
+                    )
+                    .environmentObject(navigationState)
+                })
+                .sheet(isPresented: $homeVM.requestState, content: {
+                    IncomingRequest(name: "John doe", amount: 500) {
+                        Task {
+                            try await DatabaseService.instance.approveRequest(receiverPhoneNumber: "+12345678999", sendersPhoneNumber: "+15555648583")
+                        }
+                    }
+                    .presentationDetents([.fraction(0.4)])
+                })
+                .navigationDestination(isPresented: $showStatements) {
+                    Statements()
+                        .navigationBarBackButtonHidden()
+                }
+                .navigationDestination(isPresented: $showProfile) {
+                    Profile(user: user)
+                        .navigationBarBackButtonHidden()
+                }
+                .sheet(isPresented: $showStats, content: {
+                    Stats()
+                })
+                .onAppear {
+                    Task {
+                        _ = try await DatabaseService.instance.fetchTransactionHistory()
+                        _ = await homeVM.fetchUserDetails()
+                    }
+                    
+                    print(homeVM.requestState.description)
+                    
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                        withAnimation(.bouncy) {
+                            requestSent = false
+                        }
+                    }
+                    
+                    navigationState.shouldNavigateToHome = false
+                }
+                .refreshable {
+                    Task {
+                        await homeVM.fetchUserDetails()
+                        await homeVM.fetchTransactionHistory()
+                    }
+                }
+                
+                if requestSent {
+                    Text("Request sent ✅")
+                        .foregroundStyle(.green)
+                        .offset(y: 170)
+                }
             }
         }
     }
@@ -157,7 +199,7 @@ extension Home {
             VStack(alignment: .leading) {
                 Text("Good Morning")
                     .fontWeight(.light)
-                Text("\(mpesaBalance.firstName) 👋")
+                Text("\(homeVM.username) 👋")
                     .fontWeight(.heavy)
             }
             .padding(.leading, -18)
@@ -172,6 +214,9 @@ extension Home {
             Image(systemName: "chart.pie")
                 .rotationEffect(Angle(degrees: -130))
                 .imageScale(.large)
+                .onTapGesture {
+                    showStats.toggle()
+                }
             
             Image(systemName: "qrcode.viewfinder")
                 .imageScale(.large)
@@ -193,12 +238,13 @@ extension Home {
                             .padding(.top, 6)
                         
                         VStack(alignment: .center) {
-                            Text("KSH. \(mpesaBalance.mpesaBalance.formatted(.number.precision(.fractionLength(2)).grouping(.automatic)))")
+                            Text("KSH. \(homeVM.mpesaBalance.formatted(.number.precision(.fractionLength(2)).grouping(.automatic)))")
                                 .font(.title)
                                 .fontWeight(.light)
-                            Text("Available FULIZA: KSH 8000.00")
+                            Text("Available FULIZA: KSH 500.00")
                                 .fontWeight(.light)
                                 .foregroundStyle(.blue)
+
                         }
                         .padding()
                         .frame(maxWidth: .infinity)
@@ -319,7 +365,7 @@ extension Home {
                     }
             }
             
-            if let latestTransaction = statementFetched.transactions.first {
+            if let latestTransaction = homeVM.transactions.first {
                 var formattedDate: String {
                     let formatter = DateFormatter()
                     formatter.dateFormat = "d MMM, h:mm a"
@@ -351,6 +397,7 @@ extension Home {
                     
                     VStack(alignment: .trailing, spacing: 6) {
                         Text("-KSH. \(latestTransaction.amount.formatted(.number.precision(.fractionLength(2)).grouping(.automatic)))")
+                            .fontWeight(.light)
                         Text(formattedDate)
                             .foregroundStyle(.gray)
                             .fontWeight(.light)

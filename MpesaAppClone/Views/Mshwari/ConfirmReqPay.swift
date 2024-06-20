@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct ConfirmReqPay: View {
+    @EnvironmentObject var navState: MshwariNavigationState
     @Environment(\.dismiss) var dismiss
     @Environment(\.colorScheme) var colorScheme
     @ObservedObject var loanBalance = MpesaBalance.instance
@@ -142,10 +143,10 @@ struct ConfirmReqPay: View {
                     if result {
                         if reqPayPath == .loan {
                             await loanBalance.addLoanAmountToMpesaBalance(loanAmount: loanAmount)
-                            dismiss()
+                            navState.navigateToRoot = true
                         } else {
                             await loanBalance.payLoan(amount: loanAmount)
-                            dismiss()
+                            navState.navigateToRoot = true
                         }
                     }
                 }

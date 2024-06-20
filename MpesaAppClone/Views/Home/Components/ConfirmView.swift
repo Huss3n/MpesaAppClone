@@ -9,9 +9,11 @@ import SwiftUI
 
 struct ConfirmView: View {
     @EnvironmentObject var navigationState: NavigationState
+    @ObservedObject var mpesaBalance = MpesaBalance.instance
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.dismiss) var dismiss
     @State private var initiateAuth: Bool = false
+    @State private var showFuliza: Bool = false
     
     // what to receive
     var sendOrRequest: SendOrRequest = .send
@@ -56,199 +58,226 @@ struct ConfirmView: View {
     }
     
     var body: some View {
-        VStack {
-            HStack {
-                Image(systemName: "arrow.left")
-                    .imageScale(.large)
-                    .onTapGesture {
-                        dismiss()
+        NavigationStack {
+            VStack {
+                HStack {
+                    Image(systemName: "arrow.left")
+                        .imageScale(.large)
+                        .onTapGesture {
+                            dismiss()
+                        }
+                    Spacer()
+                    
+                    Text("CONFIRM")
+                    Spacer()
+                    ZStack {
+                        RoundedRectangle(cornerRadius: 25.0)
+                            .fill(.gray)
+                            .frame(width: 60, height: 6)
+                        
+                        RoundedRectangle(cornerRadius: 25.0)
+                            .fill(.green)
+                            .frame(width: 50, height: 6, alignment: .leading)
+                            .offset(x: -10)
                     }
-                Spacer()
+                }
+                .padding(.top, 20)
                 
-                Text("CONFIRM")
-                Spacer()
-                ZStack {
-                    RoundedRectangle(cornerRadius: 25.0)
-                        .fill(.gray)
-                        .frame(width: 60, height: 6)
+                ZStack(alignment: .top) {
+                    Rectangle()
+                        .fill(colorScheme == .light ? .gray.opacity(0.15) : .white.opacity(0.05))
+                        .frame(height: 120)
+                        .clipShape(
+                            .rect(
+                                topLeadingRadius: 25,
+                                bottomLeadingRadius: 0,
+                                bottomTrailingRadius: 0,
+                                topTrailingRadius: 25
+                            )
+                        )
                     
                     RoundedRectangle(cornerRadius: 25.0)
-                        .fill(.green)
-                        .frame(width: 50, height: 6, alignment: .leading)
-                        .offset(x: -10)
-                }
-            }
-            .padding(.top, 20)
-            
-            ZStack(alignment: .top) {
-                Rectangle()
-                    .fill(colorScheme == .light ? .gray.opacity(0.15) : .white.opacity(0.05))
-                    .frame(height: 120)
-                    .clipShape(
-                        .rect(
-                            topLeadingRadius: 25,
-                            bottomLeadingRadius: 0,
-                            bottomTrailingRadius: 0,
-                            topTrailingRadius: 25
-                        )
-                    )
-                
-                RoundedRectangle(cornerRadius: 25.0)
-                    .fill(colorScheme == .light ? .gray.opacity(0.066) : .white.opacity(0.11))
-                    .shadow(radius: 4)
-                    .frame(height: 480)
-                    .overlay {
-                        VStack(alignment: .leading, spacing: 6) {
-                            Text(sendOrRequest == .send ? "SEND MONEY" : "REQUEST MONEY")
-                                .font(.subheadline)
-                                .foregroundStyle(.white)
-                                .padding(8)
-                                .background(colorScheme == .light ? .black.opacity(0.4) : .white.opacity(0.05))
-                                .cornerRadius(25)
-                                .frame(maxWidth: .infinity, alignment: .center)
-                                .offset(y: -20)
-                            
-                            // add the image from the contact and name here
-                            if !phoneNumber.isEmpty {
-                                Circle()
-                                    .fill(.gray.opacity(0.3))
-                                    .frame(width:80, height: 80)
-                                    .overlay {
-                                        Image(systemName: "person")
-                                            .font(.largeTitle)
-                                    }
+                        .fill(colorScheme == .light ? .gray.opacity(0.066) : .white.opacity(0.11))
+                        .shadow(radius: 4)
+                        .frame(height: 480)
+                        .overlay {
+                            VStack(alignment: .leading, spacing: 6) {
+                                Text(sendOrRequest == .send ? "SEND MONEY" : "REQUEST MONEY")
+                                    .font(.subheadline)
+                                    .foregroundStyle(.white)
+                                    .padding(8)
+                                    .background(colorScheme == .light ? .black.opacity(0.4) : .white.opacity(0.05))
+                                    .cornerRadius(25)
                                     .frame(maxWidth: .infinity, alignment: .center)
-                                    .offset(y: -10)
-                            } else {
-                                // show contact info
-                                Circle()
-                                    .fill(.gray.opacity(0.3))
-                                    .frame(width: 100, height: 100)
-                                    .overlay {
-                                        Text(contact?.initials ?? "")
-                                    }
-                                    .frame(maxWidth: .infinity, alignment: .center)
-                                    .offset(y: -30)
-                            }
-                            
-                            if contact != nil {
-                                Text(sendOrRequest == .send ? "SEND TO" : "REQUEST FROM")
+                                    .offset(y: -20)
+                                
+                                // add the image from the contact and name here
+                                if !phoneNumber.isEmpty {
+                                    Circle()
+                                        .fill(.gray.opacity(0.3))
+                                        .frame(width:80, height: 80)
+                                        .overlay {
+                                            Image(systemName: "person")
+                                                .font(.largeTitle)
+                                        }
+                                        .frame(maxWidth: .infinity, alignment: .center)
+                                        .offset(y: -10)
+                                } else {
+                                    // show contact info
+                                    Circle()
+                                        .fill(.gray.opacity(0.3))
+                                        .frame(width: 100, height: 100)
+                                        .overlay {
+                                            Text(contact?.initials ?? "")
+                                        }
+                                        .frame(maxWidth: .infinity, alignment: .center)
+                                        .offset(y: -30)
+                                }
+                                
+                                if contact != nil {
+                                    Text(sendOrRequest == .send ? "SEND TO" : "REQUEST FROM")
+                                        .foregroundStyle(.gray)
+                                        .fontWeight(.semibold)
+                                        .padding(.horizontal, 8)
+                                    
+                                    Text("\(contact?.givenName ?? "") \(contact?.familyName ?? "")")
+                                        .padding(.horizontal, 8)
+                                        .padding(.bottom, 12)
+                                }
+                                
+                                Text("PHONE NUMBER")
                                     .foregroundStyle(.gray)
                                     .fontWeight(.semibold)
                                     .padding(.horizontal, 8)
                                 
-                                Text("\(contact?.givenName ?? "") \(contact?.familyName ?? "")")
+                                Text(contactToShow)
                                     .padding(.horizontal, 8)
                                     .padding(.bottom, 12)
-                            }
-                            
-                            Text("PHONE NUMBER")
-                                .foregroundStyle(.gray)
-                                .fontWeight(.semibold)
-                                .padding(.horizontal, 8)
-                            
-                            Text(contactToShow)
-                                .padding(.horizontal, 8)
-                                .padding(.bottom, 12)
-                            
-                            Text("AMOUNT")
-                                .foregroundStyle(.gray)
-                                .fontWeight(.semibold)
-                                .padding(.horizontal, 8)
-                            
-                            HStack {
-                                Text("KSH. \(String(format: "%.2f", amount))")
-                                Spacer()
-                                Image(systemName: "pencil")
-                                    .imageScale(.large)
-                                    .foregroundStyle(.white)
-                                    .background(
-                                        Circle()
-                                            .fill(.black.opacity(0.8))
-                                            .frame(width: 30, height: 30)
-                                    )
-                                    .onTapGesture {
-                                        dismiss()
-                                    }
-                            }
-                            .padding(.horizontal, 8)
-                            
-                            Text("FEE: KSH. \(String(format: "%.2f", transactionCost))")
-                                .font(.caption)
-                                .fontWeight(.light)
-                                .padding(.horizontal, 8)
-                            
-                            
-                            Rectangle()
-                                .fill(.gray)
-                                .frame(height: 1)
-                                .padding(.vertical)
-                            
-                            HStack {
-                                Text("ADD DESCRIPTION")
+                                
+                                Text("AMOUNT")
                                     .foregroundStyle(.gray)
-                                    .fontWeight(.light)
+                                    .fontWeight(.semibold)
+                                    .padding(.horizontal, 8)
                                 
-                                Spacer()
+                                HStack {
+                                    Text("KSH. \(String(format: "%.2f", amount))")
+                                    Spacer()
+                                    Image(systemName: "pencil")
+                                        .imageScale(.large)
+                                        .foregroundStyle(.white)
+                                        .background(
+                                            Circle()
+                                                .fill(.black.opacity(0.8))
+                                                .frame(width: 30, height: 30)
+                                        )
+                                        .onTapGesture {
+                                            dismiss()
+                                        }
+                                }
+                                .padding(.horizontal, 8)
                                 
-                                Text("ADD GIF")
+                                Text("FEE: KSH. \(String(format: "%.2f", transactionCost))")
                                     .font(.caption)
-                                    .foregroundStyle(.primary)
-                                    .padding(8)
-                                    .background(
-                                        Capsule()
-                                            .stroke(.primary, lineWidth: 1.0)
-                                    )
-                                    .cornerRadius(20)
+                                    .fontWeight(.light)
+                                    .padding(.horizontal, 8)
+                                
+                                
+                                Rectangle()
+                                    .fill(.gray)
+                                    .frame(height: 1)
+                                    .padding(.vertical)
+                                
+                                HStack {
+                                    Text("ADD DESCRIPTION")
+                                        .foregroundStyle(.gray)
+                                        .fontWeight(.light)
+                                    
+                                    Spacer()
+                                    
+                                    Text("ADD GIF")
+                                        .font(.caption)
+                                        .foregroundStyle(.primary)
+                                        .padding(8)
+                                        .background(
+                                            Capsule()
+                                                .stroke(.primary, lineWidth: 1.0)
+                                        )
+                                        .cornerRadius(20)
+                                }
+                                .padding(.horizontal, 8)
+                                .offset(y: 5)
                             }
-                            .padding(.horizontal, 8)
-                            .offset(y: 5)
+                            .padding(.horizontal, 4)
+                            
                         }
-                        .padding(.horizontal, 4)
-                        
+                }
+                .padding(.top, 50)
+                
+                HStack {
+                    Text("Send".uppercased())
+                        .font(.title3)
+                        .fontWeight(.semibold)
+                        .frame(maxWidth: .infinity, alignment: .center)
+                    
+                    Image(systemName: "arrow.right")
+                        .imageScale(.large)
+                }
+                .foregroundStyle(.white)
+                .padding(.horizontal)
+                .frame(maxWidth: .infinity)
+                .background(
+                    RoundedRectangle(cornerRadius: 25.0)
+                        .fill(.green)
+                        .frame(height: 55)
+                )
+                .padding(.top, 40)
+                .onTapGesture {
+                    print("SEND TAPPED")
+                    if sendOrRequest == .send {
+                        initiateAuth.toggle()
+                    }else {
+                        Task {
+                            try await DatabaseService.instance.initiateRequest(phoneNumber: "+15555648583")
+                        }
+//                        DatabaseService.instance.startListeningForRequestApproval(phoneNumber: "+15555648583")
+                        navigationState.shouldNavigateToHome = true
                     }
-            }
-            .padding(.top, 50)
-            
-            HStack {
-                Text("Send".uppercased())
-                    .font(.title3)
-                    .fontWeight(.semibold)
-                    .frame(maxWidth: .infinity, alignment: .center)
+                }
                 
-                Image(systemName: "arrow.right")
-                    .imageScale(.large)
+                Spacer()
             }
-            .foregroundStyle(.white)
-            .padding(.horizontal)
-            .frame(maxWidth: .infinity)
-            .background(
-                RoundedRectangle(cornerRadius: 25.0)
-                    .fill(.green)
-                    .frame(height: 55)
-            )
-            .padding(.top, 40)
-            .onTapGesture {
-                initiateAuth.toggle()
-                
+            .padding(.horizontal, 10)
+            .sheet(isPresented: $initiateAuth) {
+                if sendOrRequest == .send {
+                    PinFallback(
+                        cancel: $initiateAuth,
+                        name: contact?.givenName ?? "",
+                        phoneNumber: contact?.mobileNumber ?? phoneNumber,
+                        amount: amount,
+                        transactionCost: transactionCost,
+                        contact: contact,
+                        transactionType: .sendMoney,
+                        agentNumber: "",
+                        storeNumber: ""
+                    )
+                    .environmentObject(navigationState)
+                }
             }
-            
-            Spacer()
+//            .sheet(isPresented: $showFuliza) {
+//                Fuliza(fulizaAmount:  amount - HomeVM.shared.mpesaBalance, cancel: $showFuliza)
+//                    .presentationDetents([.fraction(0.3)])
+//            }
+            .onAppear {
+                self.showFuliza = showFulizaAlert()
+            }
         }
-        .padding(.horizontal, 10)
-        .sheet(isPresented: $initiateAuth) {
-            PinFallback(
-                cancel: $initiateAuth,
-                name: contact?.givenName ?? "",
-                phoneNumber: contact?.mobileNumber ?? phoneNumber,
-                amount: amount,
-                transactionCost: transactionCost,
-                contact: contact,
-                transactionType: .sendMoney,
-                agentNumber: "",
-                storeNumber: ""
-            )
-            .environmentObject(navigationState)
+    }
+    
+    func showFulizaAlert() -> Bool {
+        if amount > HomeVM.shared.mpesaBalance {
+            return true
+        } else {
+            return false
         }
     }
 }
@@ -258,7 +287,50 @@ struct ConfirmView: View {
         .environmentObject(NavigationState())
 }
 
-
-/*
- AuthSuccess(name: contact?.givenName ?? "", phoneNumber: contact?.mobileNumber ?? phoneNumber, tranactionCost: transactionCost, contact: contact, transactionType: .sendMoney)
- */
+struct Fuliza: View {
+    var fulizaAmount: Double
+    @Binding var cancel: Bool
+    
+    var body: some View {
+            RoundedRectangle(cornerRadius: 25.0)
+            .fill(.gray.opacity(0.3))
+            .frame(width: 370, height: 230)
+            .overlay {
+                VStack(spacing: 12) {
+                    Text("SEND MONEY USING FULIZA")
+                        .fontWeight(.semibold)
+                    Text("You have insufficient funds on M-PESA. You are about to ")
+                        .fontWeight(.light)
+                    +
+                    Text("FULIZA KSH.\(String(format: "%.2f", fulizaAmount))")
+                        .foregroundStyle(.blue)
+                        .fontWeight(.semibold)
+                    +
+                    Text(" to complete this transaction.")
+                        .fontWeight(.light)
+                    
+                    Text("CONTINUE")
+                        .foregroundStyle(.blue)
+                        .font(.headline)
+                        .fontWeight(.bold)
+                    
+                    Rectangle()
+                        .fill(.gray.opacity(0.4))
+                        .frame(height: 2)
+                    
+                    Text("CANCEL")
+                        .font(.headline)
+                        .foregroundStyle(.gray)
+                        .fontWeight(.bold)
+                        .onTapGesture {
+                            cancel.toggle()
+                        }
+                    
+                    Spacer()
+                }
+                .multilineTextAlignment(.center)
+                .padding(.horizontal)
+                .padding(.top, 30)
+            }
+    }
+}

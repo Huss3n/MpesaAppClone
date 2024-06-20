@@ -19,8 +19,7 @@ struct UserModel: Codable {
     var image: UIImage?
     var mpesaBalance: Double
     
-    init(id: String? = nil, firstName: String, lastName: String, phoneNumber: String, imageURL: String? = nil, image: UIImage? = nil, mpesaBalance: Double) {
-        self.id = id
+    init(firstName: String, lastName: String, phoneNumber: String, imageURL: String? = nil, image: UIImage? = nil, mpesaBalance: Double) {
         self.firstName = firstName
         self.lastName = lastName
         self.phoneNumber = phoneNumber

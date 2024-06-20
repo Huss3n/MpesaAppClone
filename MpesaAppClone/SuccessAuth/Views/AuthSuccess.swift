@@ -80,8 +80,8 @@ struct AuthSuccess: View {
                     }
             }
             HStack {
-                Text(transactionType == .withdraw ? "AGENT NAME" : "NAME")
-                Text(transactionType == .withdraw ? "HELLO WORLD" : name.uppercased())
+                Text(transactionType == .withdraw ? "AGENT NAME" : "")
+                Text(transactionType == .withdraw ? "HELLO WORLD" : "")
                     .fontWeight(.light)
             }
             
@@ -174,6 +174,9 @@ struct AuthSuccess: View {
         })
         .onAppear {
             self.randomID = RandomID.shared.randomString()
+        }
+        .onDisappear {
+            navigationState.shouldNavigateToHome = false
         }
     }
 }

@@ -22,11 +22,9 @@ struct GlobalPayView: View {
     @State private var showDisableGlobalPayPop: Bool = false
     @State private var showRepeatPayments: Bool = false
     @State private var showSuspendCard: Bool = false
-    
     @State private var chosenCurrency: String = "USD"
     @State private var chosenCurrencyValue: Double = 0.01
-    
-    
+    @FocusState private var currencyKeyboard: Bool
     
     // track card flip state
     let durationDelay: CGFloat = 0.2
@@ -167,35 +165,35 @@ struct GlobalPayView: View {
                         .blur(radius: showDisableGlobalPayPop ? 4 : 0)
                         
                         RoundedRectangle(cornerRadius: 15)
-                        .fill(.white.opacity(0.9))
-                        .frame(height: 180)
-                        .overlay {
-                        VStack(alignment: .leading, spacing: 20) {
-                        Text("Disable monthly budget".uppercased())
-                        .fontWeight(.bold)
-                        Text("You are about to disable Monthly budget. Do you still want to continue? You can activate it later")
-                        
-                        HStack(spacing: 20) {
-                        Spacer()
-                        Text("CANCEL")
-                        .onTapGesture {
-                        showDisableGlobalPayPop.toggle()
-                        }
-                        
-                        Text("DISABLE")
-                        .foregroundStyle(.red)
-                        .onTapGesture {
-                        globalVM.setBugdet.toggle()
-                        showDisableGlobalPayPop.toggle()
-                        }
-                        }
-                        .font(.headline)
-                        .padding(.trailing)
-                        }
-                        .padding(.horizontal)
-                        }
-                        .padding(.horizontal)
-                        .opacity(showDisableGlobalPayPop ? 1 : 0)
+                            .fill(.white.opacity(0.9))
+                            .frame(height: 180)
+                            .overlay {
+                                VStack(alignment: .leading, spacing: 20) {
+                                    Text("Disable monthly budget".uppercased())
+                                        .fontWeight(.bold)
+                                    Text("You are about to disable Monthly budget. Do you still want to continue? You can activate it later")
+                                    
+                                    HStack(spacing: 20) {
+                                        Spacer()
+                                        Text("CANCEL")
+                                            .onTapGesture {
+                                                showDisableGlobalPayPop.toggle()
+                                            }
+                                        
+                                        Text("DISABLE")
+                                            .foregroundStyle(.red)
+                                            .onTapGesture {
+                                                globalVM.setBugdet.toggle()
+                                                showDisableGlobalPayPop.toggle()
+                                            }
+                                    }
+                                    .font(.headline)
+                                    .padding(.trailing)
+                                }
+                                .padding(.horizontal)
+                            }
+                            .padding(.horizontal)
+                            .opacity(showDisableGlobalPayPop ? 1 : 0)
                     }
                     .onAppear {
                         globalVM.resetBudgetToggle()
@@ -203,6 +201,19 @@ struct GlobalPayView: View {
                 }
                 .preferredColorScheme(.light)
                 .toolbar(.hidden, for: .tabBar)
+                .toolbar {
+                    ToolbarItem(placement: .keyboard) {
+                        HStack {
+                            Spacer()
+                            Text("DONE")
+                                .font(.headline)
+                                .foregroundStyle(.blue)
+                                .onTapGesture {
+                                    currencyKeyboard = false
+                                }
+                        }
+                    }
+                }
             }
         }
     }
@@ -251,10 +262,16 @@ extension GlobalPayView {
         .frame(width: 250, height: 55)
         .frame(maxWidth: .infinity, alignment: .center)
         .onTapGesture {
-            if showCardDetails {
-                hideCardDetailsFunc()
-            } else {
-                showCardDetailsFunc()
+            Task {
+                if !showCardDetails {
+                    let success = await LocalAuth.shared.authenticateWithBiometrics(reason:"Boimetrics needed to see card details")
+                    if success {
+                        showCardDetailsFunc()
+                    }
+                } else {
+                    hideCardDetailsFunc()
+                }
+                
             }
         }
     }
@@ -269,33 +286,39 @@ extension GlobalPayView {
                     .font(.subheadline)
                     .foregroundStyle(.gray)
             }
-
+            
+            HStack {
                 HStack {
-                    HStack {
-                        Text("USD")
-                        Image(systemName: "arrowtriangle.down.fill")
+                    Text("\(chosenCurrency)")
+                    Image(systemName: "arrowtriangle.down.fill")
+                }
+                .frame(width: 100, height: 30)
+                .background(.blue.opacity(0.2))
+                .onTapGesture {
+                    currencyKeyboard = false
+                    selectCurrency.toggle()
+                }
+                
+                TextField("Amount", value: $currencyAmount, format: .number)
+                    .padding(.leading, 50)
+                    .onChange(of: currencyAmount) { _, newValue in
+                        self.convertedAmount = newValue * (1 / chosenCurrencyValue)
                     }
-                    .frame(width: 100, height: 30)
-                    .background(.blue.opacity(0.2))
                     .onTapGesture {
-                        selectCurrency.toggle()
+                        currencyKeyboard = true
                     }
-                    
-                    
-                    TextField("", value: $currencyAmount, format: .number)
-                        .padding(.leading, 50)
-                }
-                .frame(height: 30)
-                .background(.white)
-                .overlay {
-                    RoundedRectangle(cornerRadius: 10)
-                        .stroke(Color.black, lineWidth: 1.0)
-                }
-                .onChange(of: currencyAmount) {
-                    self.convertedAmount = currencyAmount * chosenCurrencyValue
-                }
-        
-
+                    .keyboardType(.decimalPad)
+                    .focused($currencyKeyboard)
+                
+            }
+            .frame(height: 30)
+            .background(.white)
+            .overlay {
+                RoundedRectangle(cornerRadius: 10)
+                    .stroke(Color.black, lineWidth: 1.0)
+            }
+            
+            
             HStack(spacing: 0) {
                 Image(systemName: "arrow.up")
                 Image(systemName: "arrow.down")
@@ -306,18 +329,18 @@ extension GlobalPayView {
                 Text("KSH")
                     .frame(width: 100, height: 30)
                     .background(.blue.opacity(0.2))
-                Text("\(String(format: "%.2f", convertedAmount))")
-                    .padding(.leading, 50)
-                TextField("", value: $currencyAmount, format: .number)
-                    .offset(x: 60)
-                    .opacity(0)
                 
+                Spacer()
+                
+                Text(currencyAmount == 0 ? "0" : "\(convertedAmount.formatted(.number.precision(.fractionLength(2)).grouping(.automatic)))")
+                    .offset(x: -145)
             }
             .frame(height: 30)
             .background(.white)
             .overlay {
                 RoundedRectangle(cornerRadius: 10)
                     .stroke(Color.black, lineWidth: 1.0)
+                    .frame(maxWidth: .infinity)
             }
         }
         .frame(height: 120)
@@ -406,8 +429,6 @@ extension GlobalPayView {
     }
 }
 
-
-
 // MARK: FUNCTIONS
 extension GlobalPayView {
     func showCardDetailsFunc() {
@@ -469,7 +490,3 @@ extension GlobalPayView {
         count = 10
     }
 }
-
-/*
-
- */

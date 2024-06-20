@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct DepWithMshwari: View {
+    @EnvironmentObject var navState: MshwariNavigationState
     @ObservedObject var savings = MpesaBalance.instance
     @State private var amount: Double = 0
     @FocusState var amountFocus: Bool
@@ -44,7 +45,7 @@ struct DepWithMshwari: View {
                 Text("SAVINGS BALANCE KSH: \( savings.mshwariBalance.formatted(.number.precision(.fractionLength(2)).grouping(.automatic)))")
                     .fontWeight(.light)
             } else {
-                Text("M-PESA BALANCE KSH: \( savings.mpesaBalance.formatted(.number.precision(.fractionLength(2)).grouping(.automatic)))")
+                Text("M-PESA BALANCE KSH: \( HomeVM.shared.mpesaBalance .formatted(.number.precision(.fractionLength(2)).grouping(.automatic)))")
                     .fontWeight(.light)
             }
             
@@ -63,9 +64,11 @@ struct DepWithMshwari: View {
                             if isDeposit {
                                 await savings.deductMpesaBalanceAddToMshwari(depositAmount: amount)
                                 deposit.toggle()
+                                navState.navigateToRoot = true
                             } else {
                                 await savings.deductMshwariBalanceAddToMpesa(withdrawAmount: amount)
                                 deposit.toggle()
+                                navState.navigateToRoot = true
                             }
                         }
                     }

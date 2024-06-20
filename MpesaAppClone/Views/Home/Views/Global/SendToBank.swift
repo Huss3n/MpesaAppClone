@@ -74,7 +74,7 @@ struct SendToBank: View {
                         if let currency = AllCountries.shared.countryCurrencyArray[country] {
                             AllCountriesComponent(
                                 countryName: country,
-                                flagURL: country, // Assuming flagURL is a valid URL
+                                flagURL: country,
                                 countryCurrency: currency
                             )
                             .onTapGesture {

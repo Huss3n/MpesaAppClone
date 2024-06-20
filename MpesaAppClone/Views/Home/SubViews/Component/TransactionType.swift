@@ -9,6 +9,7 @@ import Foundation
 
 enum TransactionType {
     case sendMoney
+    case requestMoney
     case pay
     case withdraw
     case airtime

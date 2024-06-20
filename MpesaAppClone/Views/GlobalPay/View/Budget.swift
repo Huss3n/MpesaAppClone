@@ -13,55 +13,84 @@ struct Budget: View {
     @State private var amount: Double = 0
     @Binding var budget: Bool
     
+    @State private var showError: Bool = false
+    
     var body: some View {
-        VStack {
-            Text("Set up monthly budget")
-                .padding(.bottom, 120)
-            
-            VStack {
-                Text("Ksh")
-                    .font(.subheadline)
-                    .fontWeight(.light)
-                    .foregroundStyle(.gray)
-                TextField("", value: $amount, format: .number)
-                    .keyboardType(.decimalPad)
-                    .focused($keyboard)
-                    .offset(x: 175)
-            }
-            .frame(maxWidth: .infinity, alignment: .center)
-               
-            Rectangle()
-                .fill(Color.gray)
-                .frame(height: 2)
-            
-            HStack {
-                Text("Submit")
-                    .font(.title3)
-                    .fontWeight(.semibold)
-                    .frame(maxWidth: .infinity, alignment: .center)
+        NavigationStack {
+            VStack(spacing: 4) {
+                Spacer()
+                Text("Set up monthly budget")
+                    .padding(.top, 30)
                 
-                Image(systemName: "arrow.right")
-                    .imageScale(.large)
+                VStack {
+                    Text("Ksh")
+                        .font(.subheadline)
+                        .fontWeight(.light)
+                        .foregroundStyle(.gray)
+                    TextField("", value: $amount, format: .number)
+                        .keyboardType(.decimalPad)
+                        .focused($keyboard)
+                        .offset(x: 175)
+                }
+                .frame(maxWidth: .infinity, alignment: .center)
+                   
+                Rectangle()
+                    .fill(Color.gray)
+                    .frame(height: 2)
+                
+                Text("Amount cannot be less than 100")
+                    .font(.caption)
+                    .foregroundStyle(.red)
+                    .opacity(showError ? 1 : 0)
+                    .onChange(of: amount) {
+                        if amount > 0 {
+                            showError.toggle()
+                        }
+                    }
+                
+                HStack {
+                    Text("Submit")
+                        .font(.title3)
+                        .fontWeight(.semibold)
+                        .frame(maxWidth: .infinity, alignment: .center)
+                    
+                    Image(systemName: "arrow.right")
+                        .imageScale(.large)
+                }
+                .foregroundStyle(.white)
+                .padding(.horizontal)
+                .frame(maxWidth: .infinity)
+                .background(
+                    RoundedRectangle(cornerRadius: 25.0)
+                        .fill(amount != 10 ? .black.opacity(0.3) : .green)
+                        .frame(height: 45)
+                )
+                .padding(.top, 60)
+                .onTapGesture {
+                    guard amount >= 100 else {
+                        showError.toggle()
+                        return
+                    }
+                    
+                    globalVM.updateBudgetAmount(amount: amount)
+                    budget.toggle()
+                }
+                
+                Spacer()
+                Spacer()
             }
-            .foregroundStyle(.white)
             .padding(.horizontal)
-            .frame(maxWidth: .infinity)
-            .background(
-                RoundedRectangle(cornerRadius: 25.0)
-                    .fill(amount != 10 ? .black.opacity(0.3) : .green)
-                    .frame(height: 45)
-            )
-            .padding(.top, 60)
-            .onTapGesture {
-                globalVM.updateBudgetAmount(amount: amount)
-                budget.toggle()
+            .onAppear {
+                keyboard.toggle()
             }
-            
-            Spacer()
-        }
-        .padding(.horizontal)
-        .onAppear {
-            keyboard.toggle()
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Image(systemName: "xmark")
+                        .onTapGesture {
+                            budget.toggle()
+                        }
+                }
+            }
         }
     }
 }

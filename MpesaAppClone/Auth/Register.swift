@@ -128,7 +128,6 @@ struct PhoneNumberEntryView: View {
                             do {
                                 user = UserModel(firstName: firstName, lastName: lastName, phoneNumber: phoneNumber, mpesaBalance: 0)
                                 try await FirebaseAuth.instance.sendVerificationCode(for: phoneNumber)
-                                
                                 navigateToOTP = true
                             } catch {
                                 print("Failed to send verification code: \(error.localizedDescription)")
@@ -154,6 +153,7 @@ struct PhoneNumberEntryView: View {
             }
             .navigationDestination(isPresented: $navigateToOTP) {
                 OTPView(user: user ?? UserModel(firstName: "Hussein", lastName: "Aisak", phoneNumber: "12345678", mpesaBalance: 0))
+                    .navigationBarBackButtonHidden()
             }
         }
     }

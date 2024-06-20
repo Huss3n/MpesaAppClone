@@ -15,14 +15,14 @@ struct Login: View {
     
     let correctPin = "1234"  // Example correct PIN
     
-    var name: String = "Hussein Aisak"
-    var phoneNumber: String = "0712 345 678"
+    var name: String = "John Doe"
+    var phoneNumber: String = "(234) 567 8999"
     var body: some View {
         VStack {
             VStack {
                 PhotoPicker()
                     .frame(width: 120, height: 120)
-                Text("HUSSEIN AISAK")
+                Text(name)
                     .font(.title2)
                     .fontWeight(.semibold)
                 Text(phoneNumber)

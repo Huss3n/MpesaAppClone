@@ -7,7 +7,13 @@
 
 import SwiftUI
 
+
+class MshwariNavigationState: ObservableObject {
+    @Published var navigateToRoot: Bool = false
+}
+
 struct MshwariView: View {
+    @StateObject private var navState = MshwariNavigationState()
     @ObservedObject var mshwariBalance = MpesaBalance.instance
     @Namespace private var namespace
     @Environment(\.dismiss) var dismiss
@@ -333,15 +339,18 @@ struct MshwariView: View {
                         })
                         .fullScreenCover(isPresented: $navigate) {
                             ReqPay(reqPay: $reqPay, navigate: $navigate)
+                                .environmentObject(navState)
                                 .navigationBarBackButtonHidden()
                         }
                         .toolbar(.hidden, for: .tabBar)
                         .fullScreenCover(isPresented: $deposit) {
                             DepWithMshwari(isDeposit: true, deposit: $deposit)
+                                .environmentObject(navState)
                                 .navigationBarBackButtonHidden()
                         }
                         .fullScreenCover(isPresented: $withdraw) {
                             DepWithMshwari(deposit: $withdraw)
+                                .environmentObject(navState)
                                 .navigationBarBackButtonHidden()
                         }
                     }
@@ -351,6 +360,15 @@ struct MshwariView: View {
                     MshwariLoading()
                 }
             }
+            .environmentObject(navState)
+            .onChange(of: navState.navigateToRoot, { _ , newValue in
+                if newValue {
+                    // Logic to dismiss all sheets and navigate to root view
+                    if let window = UIApplication.shared.windows.first {
+                        window.rootViewController?.dismiss(animated: true)
+                    }
+                }
+            })
             .onAppear {
                 loadingComplete()
             }
@@ -360,7 +378,7 @@ struct MshwariView: View {
     
     private func loadingComplete() {
         self.isLoadingState = false
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
             withAnimation(.easeOut) {
                 self.isLoadingState = true
             }

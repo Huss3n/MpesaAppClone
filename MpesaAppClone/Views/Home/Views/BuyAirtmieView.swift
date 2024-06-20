@@ -67,7 +67,7 @@ struct BuyAirtmieView: View {
                         Text("KSH.")
                             .fontWeight(.ultraLight)
                         Text(amountString)
-                            .foregroundStyle(amount < mpesaBalance.mpesaBalance ? Color.primary : Color.orange)
+                            .foregroundStyle(amount < HomeVM.shared.mpesaBalance  ? Color.primary : Color.orange)
                             .onChange(of: amountString) { _, newValue in
                                 if let newAmount = Double(amountString) {
                                     amount = newAmount
@@ -81,12 +81,12 @@ struct BuyAirtmieView: View {
                     
                     
                     HStack {
-                        Text("BALANCE: KSH. \(String(format: "%.2f", mpesaBalance.mpesaBalance))")
+                        Text("BALANCE: KSH. \(String(format: "%.2f", HomeVM.shared.mpesaBalance ))")
                             .fontWeight(.bold)
                         Text("FULIZA: KSH. 500.00")
                             .fontWeight(.light)
                     }
-                    .foregroundStyle(amount < mpesaBalance.mpesaBalance ? Color.primary : Color.orange)
+                    .foregroundStyle(amount < HomeVM.shared.mpesaBalance ? Color.primary : Color.orange)
                     .font(.caption)
                     .padding(.bottom, 42)
                     

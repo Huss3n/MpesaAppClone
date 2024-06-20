@@ -47,11 +47,6 @@ struct MainTab: View {
                 }
                 .tint(.green)
                 .fontWeight(.bold)
-                .onAppear {
-                    Task {
-//                        await DatabaseService.instance.callOnLaunch()
-                    }
-                }
             } else {
                 Login(authState: $vm.isUserAuthenticated)
             }

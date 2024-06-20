@@ -25,7 +25,10 @@ struct Grow: View {
                     HStack {
                         GrowComponent(title: "GLOBAL PAY", subtitle: "The World is yours")
                             .onTapGesture {
-                                globalPay.toggle()
+                                
+                                Task {
+                                    self.globalPay = await LocalAuth.shared.authenticateWithBiometrics(reason: "Biometrics needed")
+                                }
                             }
                         GrowComponent(title: "MASHWARI", subtitle: "Go for it")
                             .onTapGesture {
@@ -106,9 +109,6 @@ struct Grow: View {
                         isText: false
                     )
               
-
-            
-                    
                 })
                 
                 Spacer()

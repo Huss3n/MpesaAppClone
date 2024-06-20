@@ -6,26 +6,16 @@
 //
 
 import Foundation
+import SwiftUI
 
+@MainActor
 final class MpesaBalance: ObservableObject {
+    @AppStorage("userLoggedIn") private var userLoggedIn: Bool = false
     static let instance = MpesaBalance()
-    private let mpesaBalanceKey = "mpesaBALANCE"
     private let mshwariBalanceKey = "mshwariAmount"
     private let loanKey = "keyLoan"
-
-    @Published var mpesaBalance: Double = 0 {
-        didSet {
-            saveMpesaBalance()
-            Task {
-                try await updateBalanceInFirebase()
-                try await fetchMpesaBalanceFromDB()
-            }
-        }
-    }
     
-    @Published var firstName: String = ""
-    
-    @Published var mshwariBalance: Double = 100 {
+    @Published var mshwariBalance: Double = 0 {
         didSet {
             saveMshwariBalance()
         }
@@ -38,41 +28,11 @@ final class MpesaBalance: ObservableObject {
     }
     
     private init() {
-        Task {
-            try await initializeBalances()
-        }
         loadBalances()
     }
-    
-    private func initializeBalances() async throws {
-        try await fetchMpesaBalanceFromDB()
-        saveMpesaBalance()
-    }
-    
-    private func fetchMpesaBalanceFromDB() async throws {
-        let user = try await DatabaseService.instance.fetchUserDetails()
-        DispatchQueue.main.async {
-            self.mpesaBalance = user.mpesaBalance
-            self.firstName = user.firstName
-        }
-    }
-    
-    private func updateBalanceInFirebase() async throws {
-        try await DatabaseService.instance.updateUserBalance(newBalance: mpesaBalance)
-    }
-    
-    private func saveMpesaBalance() {
-        if let encoded = try? JSONEncoder().encode(mpesaBalance) {
-            UserDefaults.standard.set(encoded, forKey: mpesaBalanceKey)
-        }
-    }
-    
+
+
     private func loadBalances() {
-        if let data = UserDefaults.standard.data(forKey: mpesaBalanceKey),
-           let decoded = try? JSONDecoder().decode(Double.self, from: data) {
-            mpesaBalance = decoded
-        }
-        
         if let data = UserDefaults.standard.data(forKey: mshwariBalanceKey),
            let decoded = try? JSONDecoder().decode(Double.self, from: data) {
             mshwariBalance = decoded
@@ -96,24 +56,12 @@ final class MpesaBalance: ObservableObject {
         }
     }
     
-    func deductAmount(amount: Double, transaction: Double) async {
-        let total = amount + transaction
-        do {
-            try await DatabaseService.instance.deductUserBalance(newAmount: total)
-            try await fetchMpesaBalanceFromDB()
-        } catch {
-            print("Error in deduction firestore amount \(error.localizedDescription)")
-        }
-    }
-    
     func deductMpesaBalanceAddToMshwari(depositAmount: Double) async {
         do {
-            try await DatabaseService.instance.deductUserBalance(newAmount: depositAmount)
-            mpesaBalance -= depositAmount
+            var balance = try await DatabaseService.instance.fetchUserDetails().mpesaBalance
+            balance -= depositAmount
+            try await DatabaseService.instance.updateUserBalance(newBalance: balance)
             mshwariBalance += depositAmount
-            saveMpesaBalance()
-            saveMshwariBalance()
-            try await fetchMpesaBalanceFromDB()
         } catch {
             print("Error deducting amount")
         }
@@ -123,10 +71,6 @@ final class MpesaBalance: ObservableObject {
         do {
             try await DatabaseService.instance.addUserBalance(newAmount: withdrawAmount)
             mshwariBalance -= withdrawAmount
-            mpesaBalance += withdrawAmount
-            saveMpesaBalance()
-            saveMshwariBalance()
-            try await fetchMpesaBalanceFromDB()
         } catch {
             print("Error adding amount from mshwari")
         }
@@ -135,24 +79,16 @@ final class MpesaBalance: ObservableObject {
     func addLoanAmountToMpesaBalance(loanAmount: Double) async {
         do {
             try await DatabaseService.instance.addUserBalance(newAmount: loanAmount)
-            mpesaBalance += loanAmount
-            loanBalance += loanAmount
-            saveMpesaBalance()
-            saveLoanBalance()
-            try await fetchMpesaBalanceFromDB()
+            loanBalance = loanBalance + loanAmount
         } catch {
             print("Error adding loan amount to balance")
         }
     }
     
     func payLoan(amount: Double) async {
-        loanBalance -= amount
+        loanBalance = loanBalance - amount
         do {
             try await DatabaseService.instance.deductUserBalance(newAmount: amount)
-            mpesaBalance -= amount
-            saveMpesaBalance()
-            saveLoanBalance()
-            try await fetchMpesaBalanceFromDB()
         } catch {
             print("Error when paying loan")
         }

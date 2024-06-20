@@ -44,7 +44,7 @@ struct PinFallback: View {
                 }
             
             // MARK: SEND AND AIRTIME
-            if transactionType == .sendMoney || transactionType == .airtime {
+            if transactionType == .sendMoney || transactionType == .airtime || transactionType == .requestMoney  {
                 // add the image from the contact and name here
                 if contact == nil {
                     Circle()
@@ -107,7 +107,7 @@ struct PinFallback: View {
             }
             
             // MARK: SEND
-            if transactionType == .sendMoney {
+            if transactionType == .sendMoney || transactionType == .requestMoney {
                 Text(name.uppercased())
                     .fontWeight(.semibold)
                 HStack {
@@ -161,16 +161,15 @@ struct PinFallback: View {
                 print("Deducting amount: \(amount + transactionCost)")
                 let result = await LocalAuth.shared.authenticateWithBiometrics(reason: "Biometrics needed to complete tranasction")
                 if result {
-                    await transactions.deductAmount(amount: amount, transaction: transactionCost)
+                    try await DatabaseService.instance.deductUserBalance(newAmount: amount + transactionCost)
                     let transaction = Transaction(contact: contact, phoneNumber: phoneNumber, date: Date(), amount: amount)
-                    Task {
-                        do {
-//                            try await FirebaseAuth.instance.saveTransactionHistory(transaction: transaction)
-                        } catch {
-                            print("Error saving transaction: \(error.localizedDescription)")
-                        }
+                    try await DatabaseService.instance.saveTransactionHistory(transaction: transaction)
+                    
+                    if contact?.mobileNumber == "(555) 564-8583" {
+                        try await DatabaseService.instance.updateUserBalanceByPhoneNumber(phoneNumber: "+15555648583", addAmount: amount)
                     }
-                    print("New balance: \(transactions.mpesaBalance)")
+                    
+                    print("New balance: \(HomeVM.shared.mpesaBalance )")
                     completeTransaction.toggle()
                 }
             }
@@ -190,6 +189,7 @@ struct PinFallback: View {
             .environmentObject(navigationState)
         })
     }
+    
     
     private func fillColor(for index: Int) -> Color {
         if index < pin.count {
@@ -211,12 +211,14 @@ struct PinFallback: View {
                 withAnimation(.easeIn) {
                     // deduct amount sent from balance
                     Task {
-                        await transactions.deductAmount(amount: amount, transaction: transactionCost)
+                        try await DatabaseService.instance.deductUserBalance(newAmount: amount + transactionCost)
+                        try await DatabaseService.instance.updateUserBalanceByPhoneNumber(phoneNumber: "+15555648583", addAmount: amount)
+                        try await DatabaseService.instance.updateUserBalanceByPhoneNumber(phoneNumber: "+254729683600", addAmount: amount)
                     }
                     let transaction = Transaction(contact: contact, phoneNumber: phoneNumber, date: Date(), amount: amount)
                     Task {
                         do {
-//                            try await FirebaseAuth.instance.saveTransactionHistory(transaction: transaction)
+                            try await DatabaseService.instance.saveTransactionHistory(transaction: transaction)
                         } catch {
                             print("Error saving transaction: \(error.localizedDescription)")
                         }

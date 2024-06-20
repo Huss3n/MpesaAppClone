@@ -11,6 +11,7 @@ import PhotosUI
 class ProfileViewModel: ObservableObject {
     @Published var user: UserModel
     @Published var photosPickerItem: PhotosPickerItem?
+
     
     init(user: UserModel) {
         self.user = user
@@ -32,13 +33,15 @@ class ProfileViewModel: ObservableObject {
 }
 
 struct Profile: View {
-    @AppStorage("userLoggedIn") var userLoggedIn: Bool = false
     @StateObject private var vm: ProfileViewModel
     @Environment(\.dismiss) var dismiss
     @State private var appearance: Bool = false
     @State private var biometricAuth: Bool = true
     @State private var fastlogin: Bool = false
     @State private var showPopUp: Bool = false
+    @AppStorage("userLoggedIn") private var userLoggedIn: Bool = false
+    @State private var preferedColorScheme: ColorScheme = .light
+    @State private var chooseTheme: Bool = false
     
     init(user: UserModel) {
         _vm = StateObject(wrappedValue: ProfileViewModel(user: user))
@@ -50,6 +53,7 @@ struct Profile: View {
                 ZStack {
                     VStack(alignment: .leading, spacing: 20) {
                         Text("ACCOUNT")
+                            .foregroundStyle(.primary)
                             .font(.title)
                             .fontWeight(.light)
                             .padding(.top, 20)
@@ -162,6 +166,9 @@ struct Profile: View {
                             imageName: appearance ? "sun.min" : "moon",
                             backgroundColor: appearance ? .yellow : .gray
                         )
+                        .onTapGesture {
+                            chooseTheme.toggle()
+                        }
                         
                         TransactionCatgoryComponent(
                             name: "log out",
@@ -243,15 +250,26 @@ struct Profile: View {
                     }
                     .sheet(isPresented: $showPopUp) {
                         LogoutPop(logout: {
-                            userLoggedIn = false
-                            Task.init {
-                                await FirebaseAuth.instance.logout()
-                            }
+                            print("on start \(userLoggedIn.description)")
+                            showPopUp.toggle()
                             dismiss()
-                            
+                            DispatchQueue.main.async {
+                                userLoggedIn = false
+                            }
+                            print("on end \(userLoggedIn.description)")
+                            if !userLoggedIn {
+                                Task.init {
+                                    await FirebaseAuth.instance.logout()
+                                }
+                            }
                         }, showPopUp: $showPopUp)
                         .presentationDetents([.fraction(0.3)])
                     }
+                    .sheet(isPresented: $chooseTheme) {
+                        ColorTheme(colorScheme: $preferedColorScheme, chooseTheme: $chooseTheme)
+                            .presentationDetents([.fraction(0.3)])
+                    }
+                    .preferredColorScheme(preferedColorScheme)
                 }
             }
             

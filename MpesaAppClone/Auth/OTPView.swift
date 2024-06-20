@@ -13,7 +13,7 @@ struct OTPView: View {
     @State private var timerValue: Int = 60
     @State private var timer: Timer?
     @State private var error: String = ""
-    @AppStorage("userLoggedIn") var userLoggedIn: Bool = false
+    @AppStorage("userLoggedIn") private var userLoggedIn: Bool = false
     
     var user: UserModel
     
@@ -45,17 +45,24 @@ struct OTPView: View {
                 .padding()
             
             Text(error)
-                .opacity(error.count != 0 ? 1 : 0)
+                .opacity(error.count > 0 ? 1 : 0)
             
             Button {
                 Task {
+                    print("START: \(userLoggedIn.description)")
                     do {
                         try await FirebaseAuth.instance.verifyUserCode(verificationCode: otp) { success, authData in
-                                self.userLoggedIn = success
+                            print("Success \(success.description)")
+                            DispatchQueue.main.async {
+                                userLoggedIn = success
+                            }
+                            print("AFTER SUCCESS: \(userLoggedIn.description)")
                         }
                         if userLoggedIn {
                             try await DatabaseService.instance.saveUserData(user: user)
+                            try await DatabaseService.instance.saveRequestState()
                         }
+                        
                     } catch {
                         self.error = error.localizedDescription
                         print("Failed to verify code: \(error.localizedDescription)")
