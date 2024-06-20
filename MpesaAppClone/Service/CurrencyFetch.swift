@@ -13,6 +13,8 @@ class CurrencyFetch: ObservableObject {
     
     var cancellables = Set<AnyCancellable>()
     
+    let apiKey = "" // <- add your api Key here from https://v6.exchangerate-api.com
+    
     init() {
         Task {
             do {
@@ -24,7 +26,7 @@ class CurrencyFetch: ObservableObject {
     }
     
     func fetchCurrencyData() async throws {
-         guard let url = URL(string: "https://v6.exchangerate-api.com/v6/5bb51ba5d735c7c8d5c84e61/latest/KES") else { return }
+         guard let url = URL(string: "https://v6.exchangerate-api.com/v6/\(apiKey)/latest/KES") else { return }
 
          URLSession.shared.dataTaskPublisher(for: url)
              .tryMap { output -> Data in
@@ -58,8 +60,8 @@ class CurrencyFetch: ObservableObject {
     
     // fetch the currency
 //    func fetchCurrencyData() async throws {
-//        guard let url = URL(string: "https://v6.exchangerate-api.com/v6/5bb51ba5d735c7c8d5c84e61/latest/KES") else { return }
-//        
+//        guard let url = URL(string: "https://v6.exchangerate-api.com/v6/\(apiKey)/latest/KES") else { return }
+//
 //        URLSession.shared.dataTaskPublisher(for: url)
 //            .receive(on: DispatchQueue.main)
 //            .tryMap(downlaodData)
